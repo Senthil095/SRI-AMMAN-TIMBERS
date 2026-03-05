@@ -1,0 +1,248 @@
+/* ── Face Registration Modal ──────────────────────────── */
+.face-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+.face-modal {
+    background: linear-gradient(145deg, #1a1f2e, #141824);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 28px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Header */
+.face-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.face-modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f8f9fa;
+    margin: 0 0 4px;
+}
+
+.face-modal-subtitle {
+    font-size: 0.8rem;
+    color: rgba(248, 249, 250, 0.5);
+    margin: 0;
+}
+
+.face-modal-close {
+    background: rgba(255, 255, 255, 0.06);
+    border: none;
+    color: rgba(248, 249, 250, 0.6);
+    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.face-modal-close:hover {
+    background: rgba(255, 107, 107, 0.15);
+    color: #ff6b6b;
+}
+
+/* Camera viewport */
+.face-viewport {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #0d1117;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 16px;
+}
+
+.face-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    /* mirror */
+}
+
+.face-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+    pointer-events: none;
+}
+
+/* Placeholder when camera off */
+.face-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.face-icon-ring {
+    font-size: 3rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px dashed rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.face-placeholder p {
+    color: rgba(248, 249, 250, 0.35);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Scanning line animation */
+.face-scan-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00e676, transparent);
+    box-shadow: 0 0 10px #00e676;
+    animation: scanMove 2s linear infinite;
+}
+
+@keyframes scanMove {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+/* Status badge */
+.face-status-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+}
+
+.face-status-badge.detecting {
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.face-status-badge.detected {
+    background: rgba(0, 230, 118, 0.2);
+    color: #00e676;
+    border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+/* Captured state */
+.face-captured-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 230, 118, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #00e676;
+    font-size: 0.9rem;
+    font-weight: 600;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Loading / Error bars */
+.face-loading-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(255, 196, 0, 0.08);
+    border: 1px solid rgba(255, 196, 0, 0.15);
+    border-radius: 10px;
+    font-size: 0.78rem;
+    color: #ffd166;
+    margin-bottom: 14px;
+}
+
+.face-error-bar {
+    padding: 8px 14px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+    border-radius: 10px;
+    font-size: 0.78rem;
+    color: #ff6b6b;
+    margin-bottom: 14px;
+}
+
+.spin-icon {
+    animation: spin 1s linear infinite;
+    display: flex;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Actions */
+.face-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,215 @@
+/* Image Upload */
+.image-upload-area {
+    border: 2px dashed #dee2e6;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafbfc;
+}
+
+.image-upload-area:hover {
+    border-color: rgba(255, 107, 107, 0.4);
+    background: #fff0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(255, 107, 107, 0.1);
+}
+
+.image-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #adb5bd;
+    padding: 24px;
+    text-align: center;
+}
+
+.image-upload-placeholder span:first-of-type {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.upload-hint {
+    font-size: 0.75rem !important;
+    color: #adb5bd !important;
+}
+
+.image-preview-wrapper {
+    position: relative;
+    width: 100%;
+    height: 140px;
+}
+
+.image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.image-upload-area:hover .image-preview-overlay {
+    opacity: 1;
+}
+
+.upload-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b6b, #ffd166);
+    background-size: 200% 100%;
+    animation: colorWave 2s ease infinite;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Product Thumbnail */
+.product-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.product-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.product-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ── Sizes Section ─────────────────────────────────────────── */
+.sizes-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.size-preset-btn {
+    padding: 7px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #dee2e6;
+    background: white;
+    color: #495057;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.size-preset-btn:hover:not(:disabled) {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    background: #fff0f0;
+    transform: translateY(1px) scale(0.97);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+.size-preset-btn.added {
+    background: #dcfce7;
+    border-color: rgba(22, 163, 74, 0.3);
+    color: #16a34a;
+    cursor: default;
+}
+
+.size-preset-btn.custom {
+    border-style: dashed;
+    color: #ff6b6b;
+    border-color: rgba(255, 107, 107, 0.3);
+}
+
+.sizes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.size-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 100px 80px 36px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border: 1px solid #f1f3f5;
+    border-radius: 12px;
+}
+
+.size-input {
+    padding: 8px 10px !important;
+    font-size: 0.82rem !important;
+    min-height: auto !important;
+}
+
+.size-remove-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid #fecaca;
+    background: #fee2e2;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.size-remove-btn:hover {
+    background: #dc2626;
+    color: white;
+    transform: scale(0.93);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 600px) {
+    .size-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
