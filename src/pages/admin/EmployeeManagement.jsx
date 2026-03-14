@@ -29,9 +29,20 @@ const EmployeeManagement = () => {
     const [filterStatus, setFilterStatus] = useState('All');
     const [registerFaceEmp, setRegisterFaceEmp] = useState(null); // employee to register face for
 
+    const fetchEmployees = async () => {
+        try {
+            const snapshot = await getDocs(collection(db, 'employees'));
+            setEmployees(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        } catch (err) {
+            console.error("Fetch Employees Error:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         let mounted = true;
-        const fetchEmployees = async () => {
+        const initFetch = async () => {
             try {
                 // Safety timeout
                 const timeoutId = setTimeout(() => {
@@ -53,7 +64,7 @@ const EmployeeManagement = () => {
                 if (mounted) setLoading(false);
             }
         };
-        fetchEmployees();
+        initFetch();
         return () => { mounted = false; };
     }, []);
 

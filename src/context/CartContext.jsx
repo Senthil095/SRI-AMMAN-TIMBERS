@@ -36,6 +36,14 @@ export const CartProvider = ({ children }) => {
 
     const addToCart = (product, selectedSize = null) => {
         setCartItems((prev) => {
+            // Revert to old behavior ONLY if product has absolutely no sizes defined (legacy DB records)
+            // Otherwise, enforce selectedSize.
+            const hasSizes = product.sizes && product.sizes.length > 0;
+            if (hasSizes && !selectedSize) {
+                toast.error('Please select a size first');
+                return prev;
+            }
+
             const cartKey = selectedSize ? `${product.id}_${selectedSize.label}` : product.id;
             const existing = prev.find((item) => item.cartKey === cartKey);
             if (existing) {

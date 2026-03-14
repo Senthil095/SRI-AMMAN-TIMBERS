@@ -20,8 +20,9 @@ const PRESET_SIZES = [
 ];
 
 const EMPTY_FORM = {
-    name: '', price: '', discountPrice: '', category: 'Interior',
-    description: '', stock: '', sizes: [],
+    name: '', category: 'Interior',
+    description: '', sizes: [],
+    colorHex: '#FF6B6B',
 };
 
 const ProductManagement = () => {
@@ -87,8 +88,15 @@ const ProductManagement = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!form.name || !form.price || !form.stock) {
-            toast.error('Please fill in required fields (name, price, stock)');
+        if (!form.name || form.sizes.length === 0) {
+            toast.error('Please provide a name and at least one size option.');
+            return;
+        }
+        
+        // Ensure all sizes have valid data
+        const validSizes = form.sizes.filter(s => s.label && s.litres && s.price);
+        if (validSizes.length === 0) {
+            toast.error('Please ensure sizes have a Label, Litres, and Price.');
             return;
         }
         setSaving(true);
@@ -108,15 +116,19 @@ const ProductManagement = () => {
 
             const finalUrl = processUrl(imageUrl);
 
+            // Derive global properties for legacy compatibility/easier sorting
+            const basePrice = Math.min(...validSizes.map(s => Number(s.price)));
+            const totalStock = validSizes.reduce((sum, s) => sum + (Number(s.stock) || 0), 0);
+
             const data = {
                 name: form.name,
-                price: parseFloat(form.price),
-                discountPrice: form.discountPrice ? parseFloat(form.discountPrice) : null,
                 category: form.category,
                 description: form.description,
-                stock: parseInt(form.stock),
                 imageUrl: finalUrl,
-                sizes: form.sizes.filter(s => s.label && s.litres && s.price).map(s => ({
+                colorHex: form.colorHex || '#FF6B6B',
+                price: basePrice, // Store lowest price as base price
+                stock: totalStock, // Aggregate stock
+                sizes: validSizes.map(s => ({
                     label: s.label,
                     litres: Number(s.litres),
                     price: Number(s.price),
@@ -143,12 +155,10 @@ const ProductManagement = () => {
     const handleEdit = (product) => {
         setForm({
             name: product.name || '',
-            price: product.price || '',
-            discountPrice: product.discountPrice || '',
             category: product.category || 'Interior',
             description: product.description || '',
-            stock: product.stock || '',
             sizes: product.sizes || [],
+            colorHex: product.colorHex || '#FF6B6B',
         });
         setImageUrl(product.imageUrl || '');
         setEditId(product.id);
@@ -210,21 +220,27 @@ const ProductManagement = () => {
                                     {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
                                 </select>
                             </div>
+
                             <div className="form-group">
-                                <label className="form-label">Price (₹) *</label>
-                                <input type="number" className="form-input" placeholder="1200" value={form.price}
-                                    onChange={(e) => setForm({ ...form, price: e.target.value })} min="0" />
+                                <label className="form-label">Paint Color *</label>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <input
+                                        type="color"
+                                        value={form.colorHex}
+                                        onChange={(e) => setForm({ ...form, colorHex: e.target.value })}
+                                        style={{ width: '48px', height: '48px', border: 'none', borderRadius: '12px', cursor: 'pointer', padding: 0 }}
+                                    />
+                                    <input
+                                        type="text"
+                                        className="form-input"
+                                        placeholder="#FF6B6B"
+                                        value={form.colorHex}
+                                        onChange={(e) => setForm({ ...form, colorHex: e.target.value })}
+                                        style={{ flex: 1, fontFamily: 'monospace' }}
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label className="form-label">Discount Price (₹)</label>
-                                <input type="number" className="form-input" placeholder="999" value={form.discountPrice}
-                                    onChange={(e) => setForm({ ...form, discountPrice: e.target.value })} min="0" />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Stock Count *</label>
-                                <input type="number" className="form-input" placeholder="50" value={form.stock}
-                                    onChange={(e) => setForm({ ...form, stock: e.target.value })} min="0" />
-                            </div>
+
                             <div className="form-group">
                                 <label className="form-label">Product Image URL</label>
                                 <input
@@ -385,6 +401,9 @@ const ProductManagement = () => {
                                             <div className="product-thumb">
                                                 {p.imageUrl ? <img src={p.imageUrl} alt={p.name} /> : <span>🎨</span>}
                                             </div>
+                                            {p.colorHex && (
+                                                <div style={{ width: '24px', height: '24px', borderRadius: '8px', background: p.colorHex, border: '2px solid rgba(255,255,255,0.2)', flexShrink: 0 }} />
+                                            )}
                                             <div>
                                                 <p style={{ fontWeight: 600, color: '#f8f9fa', fontSize: '0.875rem' }}>{p.name}</p>
                                                 <p style={{ fontSize: '0.75rem', color: 'rgba(248,249,250,0.4)', marginTop: '2px' }}>
@@ -394,9 +413,13 @@ const ProductManagement = () => {
                                         </div>
                                     </td>
                                     <td><span className="badge badge-info">{p.category}</span></td>
-                                    <td style={{ fontWeight: 600 }}>₹{p.price?.toLocaleString()}</td>
+                                    <td style={{ fontWeight: 600 }}>
+                                        {p.sizes?.length > 0 
+                                            ? `From ₹${Math.min(...p.sizes.map(s => s.price)).toLocaleString()}` 
+                                            : p.price ? `₹${p.price.toLocaleString()}` : '—'}
+                                    </td>
                                     <td style={{ color: '#4ade80' }}>
-                                        {p.discountPrice ? `₹${p.discountPrice?.toLocaleString()}` : '—'}
+                                        {p.sizes?.length || 0} Sizes
                                     </td>
                                     <td>
                                         <span className={`badge ${p.stock === 0 ? 'badge-danger' : p.stock <= 5 ? 'badge-warning' : 'badge-success'}`}>

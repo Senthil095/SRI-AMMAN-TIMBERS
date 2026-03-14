@@ -1,0 +1,96 @@
+﻿
+> paintpro-retail@1.0.0 build
+> vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 65 modules transformed.
+node.exe : [31mx[39m 
+Build failed in 1.32s
+At C:\Program Files\nod
+ejs\npm.ps1:29 char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: ([31mx[39m B   
+ uild failed in 1.3    
+2s:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+[31merror during 
+build:
+[31m[vite:esbuild] 
+Transform failed with 
+1 error:
+D:/CONS/SRI-AMMAN-TIMBE
+RS/src/pages/admin/Face
+ScanAttendance.jsx:446:
+12: ERROR: Expected 
+")" but found "{"[31m
+file: [36mD:/CONS/SRI-
+AMMAN-TIMBERS/src/pages
+/admin/FaceScanAttendan
+ce.jsx:446:12[31m
+[33m
+[33mExpected ")" but 
+found "{"[33m
+444|              
+</div>
+445|  
+446|              {/* 
+Help text */}
+   |              ^
+447|              
+{cameraActive && 
+isIpAllowed === true 
+&& (
+448|                  
+<div className="face-sc
+an-help">
+[31m
+    at 
+failureErrorWithLog (D:
+\CONS\SRI-AMMAN-TIMBERS
+\node_modules\esbuild\l
+ib\main.js:1472:15)
+    at D:\CONS\SRI-AMMA
+N-TIMBERS\node_modules\
+esbuild\lib\main.js:755
+:50
+    at responseCallback
+s.<computed> (D:\CONS\S
+RI-AMMAN-TIMBERS\node_m
+odules\esbuild\lib\main
+.js:622:9)
+    at 
+handleIncomingPacket (D
+:\CONS\SRI-AMMAN-TIMBER
+S\node_modules\esbuild\
+lib\main.js:677:12)
+    at 
+Socket.readFromStdout (
+D:\CONS\SRI-AMMAN-TIMBE
+RS\node_modules\esbuild
+\lib\main.js:600:7)
+    at Socket.emit 
+(node:events:518:28)
+    at addChunk (node:i
+nternal/streams/readabl
+e:561:12)
+    at readableAddChunk
+PushByteMode (node:inte
+rnal/streams/readable:5
+12:3)
+    at Readable.push (n
+ode:internal/streams/re
+adable:392:5)
+    at 
+Pipe.onStreamRead (node
+:internal/stream_base_c
+ommons:189:23)[39m

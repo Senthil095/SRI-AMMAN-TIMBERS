@@ -353,19 +353,6 @@ const CartPage = () => {
                                 </div>
                             </div>
 
-                            {/* Promo code */}
-                            <div className="cart-promo-card">
-                                <h3 className="cart-promo-title"><FiTag size={15} /> Promo Code</h3>
-                                <div className="cart-promo-form">
-                                    <input
-                                        type="text"
-                                        className="form-input"
-                                        placeholder="Enter promo code"
-                                        style={{ borderRadius: '10px 0 0 10px', borderRight: 'none' }}
-                                    />
-                                    <button className="cart-promo-btn">Apply</button>
-                                </div>
-                            </div>
                         </div>
                     )}
                 </div>

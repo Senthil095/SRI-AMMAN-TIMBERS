@@ -138,8 +138,8 @@ const FaceRegisterModal = ({ employee, onClose, onSuccess }) => {
             onSuccess?.();
             onClose();
         } catch (err) {
-            console.error(err);
-            toast.error('Failed to save face data. Try again.');
+            console.error("Save Face Error:", err);
+            toast.error(`Error: ${err.message || 'Unknown error'}`);
         } finally {
             setSaving(false);
         }

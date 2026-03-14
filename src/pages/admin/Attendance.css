@@ -152,12 +152,6 @@
     cursor: default;
 }
 
-.calendar-day:not(.empty):hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    z-index: 2;
-}
-
 .calendar-day.empty {
     background: transparent;
     border: none;
@@ -211,57 +205,7 @@
     color: #dc2626;
 }
 
-.day-actions {
-    display: flex;
-    gap: 3px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.calendar-day:hover .day-actions {
-    opacity: 1;
-}
-
-.day-btn {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform: scale(0.8);
-}
-
-.calendar-day:hover .day-btn {
-    transform: scale(1);
-}
-
-.day-btn.present-btn {
-    background: rgba(22, 163, 74, 0.15);
-    color: #16a34a;
-}
-
-.day-btn.present-btn:hover {
-    background: #16a34a;
-    color: white;
-    transform: scale(0.9);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.day-btn.absent-btn {
-    background: rgba(220, 38, 38, 0.12);
-    color: #dc2626;
-}
-
-.day-btn.absent-btn:hover {
-    background: #dc2626;
-    color: white;
-    transform: scale(0.9);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
-}
+/* Removed day actions styles since marking is handled via Face Scan */
 
 /* Legend */
 .calendar-legend {
@@ -358,42 +302,4 @@
 .search-input::placeholder {
     color: #adb5bd;
 }
-
-/* ── Attendance Tab Toggle (light theme) ─────── */
-.attendance-tab-toggle {
-    display: flex;
-    gap: 5px;
-    background: #f1f3f5;
-    border: 1px solid #dee2e6;
-    border-radius: 12px;
-    padding: 4px;
-}
-
-.att-tab-btn {
-    padding: 7px 18px;
-    border-radius: 9px;
-    border: none;
-    background: transparent;
-    color: #6c757d;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-}
-
-.att-tab-btn.active {
-    background: linear-gradient(135deg, #ff6b6b, #e85555);
-    color: white;
-    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
-}
-
-.att-tab-btn:not(.active):hover {
-    background: white;
-    color: #212529;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-}
+

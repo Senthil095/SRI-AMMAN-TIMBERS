@@ -11,6 +11,9 @@ const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/models';
 const SHIFT_START_HOUR = 9;  // 9:00 AM — late if check-in is after this
 const SHIFT_START_MINUTE = 0;
 
+// Hardcoded for demonstration. In a real app, this might come from a DB config.
+const ALLOWED_SHOP_IP = '122.164.88.169'; // Placeholder. User must change this to their actual shop IP.
+
 const FaceScanAttendance = ({ onAttendanceMarked }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
@@ -28,6 +31,34 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
     const [marking, setMarking] = useState(false);
     const [lastAction, setLastAction] = useState(null); // { name, action, time }
     const [registeredCount, setRegisteredCount] = useState(0);
+
+    // IP Restriction State
+    const [isIpAllowed, setIsIpAllowed] = useState(null); // null = checking, true = allowed, false = blocked
+    const [userIp, setUserIp] = useState('');
+
+    // Check IP Address
+    useEffect(() => {
+        const verifyIp = async () => {
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                setUserIp(data.ip);
+                // IN PRODUCTION: Change this logic or ALLOWED_SHOP_IP to exactly match the shop's public IP
+                if (data.ip === ALLOWED_SHOP_IP || ALLOWED_SHOP_IP === '') {
+                    setIsIpAllowed(true);
+                } else {
+                    // For debugging, currently allow it but in real-life, set this to false
+                    // setIsIpAllowed(false);
+                    // Temporarily allowing for development:
+                    setIsIpAllowed(true); 
+                }
+            } catch (err) {
+                console.error('Failed to fetch IP:', err);
+                setIsIpAllowed(false);
+            }
+        };
+        verifyIp();
+    }, []);
 
     // Load face-api.js models
     useEffect(() => {
@@ -140,20 +171,22 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
                 const emp = employees.find(e => e.id === match.label);
 
                 if (match.label !== 'unknown' && emp) {
-                    // Draw green bounding box
                     const box = resized.detection.box;
+                    const mirroredX = dims.width - (box.x + box.width);
+
+                    // Draw green bounding box
                     ctx.strokeStyle = '#00e676';
                     ctx.lineWidth = 3;
                     ctx.shadowColor = '#00e676';
                     ctx.shadowBlur = 15;
-                    ctx.strokeRect(box.x, box.y, box.width, box.height);
+                    ctx.strokeRect(mirroredX, box.y, box.width, box.height);
                     // Name label above box
                     ctx.shadowBlur = 0;
                     ctx.fillStyle = 'rgba(0, 230, 118, 0.9)';
-                    ctx.fillRect(box.x, box.y - 30, box.width, 30);
+                    ctx.fillRect(mirroredX, box.y - 30, box.width, 30);
                     ctx.fillStyle = '#000';
                     ctx.font = 'bold 14px Inter, sans-serif';
-                    ctx.fillText(emp.fullName, box.x + 6, box.y - 10);
+                    ctx.fillText(emp.fullName, mirroredX + 6, box.y - 10);
 
                     // Update recognized employee state and fetch their today record
                     setRecognizedEmp(prev => {
@@ -165,17 +198,18 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
                 } else {
                     // Unknown face
                     const box = resized.detection.box;
+                    const mirroredX = dims.width - (box.x + box.width);
                     ctx.strokeStyle = '#ff9800';
                     ctx.lineWidth = 2;
                     ctx.shadowColor = '#ff9800';
                     ctx.shadowBlur = 8;
-                    ctx.strokeRect(box.x, box.y, box.width, box.height);
+                    ctx.strokeRect(mirroredX, box.y, box.width, box.height);
                     ctx.shadowBlur = 0;
                     ctx.fillStyle = 'rgba(255, 152, 0, 0.85)';
-                    ctx.fillRect(box.x, box.y - 26, box.width, 26);
+                    ctx.fillRect(mirroredX, box.y - 26, box.width, 26);
                     ctx.fillStyle = '#000';
                     ctx.font = 'bold 13px Inter, sans-serif';
-                    ctx.fillText('Unknown Employee', box.x + 6, box.y - 8);
+                    ctx.fillText('Unknown Employee', mirroredX + 6, box.y - 8);
                     setRecognizedEmp(null);
                     setTodayRecord(null);
                 }
@@ -234,11 +268,24 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
                 setLastAction({ name: recognizedEmp.fullName, action: 'Check-In', time: timeStr, status });
             } else {
                 // Check-out — update existing record
+                let finalStatus = todayRecord.attendanceStatus;
+                
+                // If checking out before 2:00 PM (14:00), mark as Half Day
+                if (now.getHours() < 14) {
+                    finalStatus = 'Half Day';
+                }
+
                 await updateDoc(doc(db, 'attendanceRecords', todayRecord.docId), {
                     outTime: timeStr,
+                    attendanceStatus: finalStatus
                 });
-                toast.success(`👋 ${recognizedEmp.fullName} — Check-Out at ${timeStr}`, { duration: 4000 });
-                setLastAction({ name: recognizedEmp.fullName, action: 'Check-Out', time: timeStr, status: todayRecord.attendanceStatus });
+                
+                const msg = finalStatus === 'Half Day' 
+                    ? `⚠ ${recognizedEmp.fullName} — Early Check-Out (HALF DAY)`
+                    : `👋 ${recognizedEmp.fullName} — Check-Out at ${timeStr}`;
+                    
+                toast.success(msg, { duration: 4000 });
+                setLastAction({ name: recognizedEmp.fullName, action: 'Check-Out', time: timeStr, status: finalStatus });
             }
             setRecognizedEmp(null);
             setTodayRecord(null);
@@ -270,15 +317,29 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
                 </div>
             </div>
 
-            {registeredCount === 0 && (
+            {/* IP Restriction Warning */}
+            {isIpAllowed === false && (
+                <div className="face-scan-ip-blocked">
+                    <div className="ip-blocked-content">
+                        <FiAlertCircle size={48} color="#dc2626" />
+                        <h2>Network Restricted</h2>
+                        <p>Attendance can only be marked when connected to the <strong>Shop Wi-Fi</strong>.</p>
+                        <p className="ip-info">Your current IP: {userIp}</p>
+                        <p className="ip-info">Please connect to the correct network and refresh the page.</p>
+                    </div>
+                </div>
+            )}
+
+            {registeredCount === 0 && isIpAllowed !== false && (
                 <div className="face-scan-warning">
                     <FiAlertCircle size={14} />
                     No faces registered yet. Go to Employee Management → click the 📷 camera icon to register faces.
                 </div>
             )}
 
-            {/* Camera Viewport */}
-            <div className="face-scan-viewport">
+            {/* Camera Viewport (Only show if IP is allowed) */}
+            {isIpAllowed === true && (
+                <div className="face-scan-viewport">
                 <video ref={videoRef} className="face-scan-video" muted playsInline />
                 <canvas ref={canvasRef} className="face-scan-canvas" />
 
@@ -317,10 +378,10 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
                         </div>
                         <p className="face-marked-name">{lastAction.name}</p>
                         <p className="face-marked-action">{lastAction.action} — {lastAction.time}</p>
-                        {lastAction.status === 'Late' && <span className="face-marked-late">⚠ LATE ENTRY</span>}
                     </div>
                 )}
             </div>
+            )}
 
             {/* Right side: Recognized employee card */}
             {recognizedEmp && action !== 'done' && (
@@ -342,20 +403,21 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
             )}
 
             {/* Model loading */}
-            {!modelsLoaded && !modelError && (
+            {!modelsLoaded && !modelError && isIpAllowed === true && (
                 <div className="face-scan-loading">
                     <span className="spin-icon"><FiLoader size={14} /></span>
                     {modelProgress} (first time only — models downloading…)
                 </div>
             )}
-            {modelError && (
+            {modelError && isIpAllowed === true && (
                 <div className="face-scan-error">
                     ⚠ Failed to load recognition models. Check your internet connection and refresh.
                 </div>
             )}
 
             {/* Action buttons */}
-            <div className="face-scan-actions">
+            {isIpAllowed === true && (
+                <div className="face-scan-actions">
                 {!cameraActive ? (
                     <button
                         className="btn btn-primary"
@@ -380,9 +442,10 @@ const FaceScanAttendance = ({ onAttendanceMarked }) => {
                     </>
                 )}
             </div>
+            )}
 
             {/* Help text */}
-            {cameraActive && (
+            {cameraActive && isIpAllowed === true && (
                 <div className="face-scan-help">
                     <strong>How it works:</strong> Stand in front of the camera. When your face is recognized, click <em>Mark Check-In</em> (morning) or <em>Mark Check-Out</em> (evening). If you arrive after {SHIFT_START_HOUR}:00 AM, your entry is marked <em>Late</em>.
                 </div>

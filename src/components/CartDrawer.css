@@ -278,12 +278,12 @@
 
 .cart-checkout-btn {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     border-radius: 14px;
     background: linear-gradient(135deg, #ff6b6b 0%, #e85555 100%);
     color: white;
-    font-size: 0.95rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 800;
     border: none;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -295,6 +295,13 @@
     font-family: 'Inter', sans-serif;
     position: relative;
     overflow: hidden;
+    animation: drawerCtaPulse 2s infinite;
+}
+
+@keyframes drawerCtaPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.5); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
 }
 
 .cart-checkout-btn:hover {

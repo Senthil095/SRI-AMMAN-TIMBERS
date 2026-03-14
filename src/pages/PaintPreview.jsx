@@ -1,35 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { FiUpload, FiDownload, FiRefreshCw, FiHeart, FiClock, FiSliders, FiZoomIn, FiZoomOut, FiEye, FiCheck, FiX } from 'react-icons/fi';
+import { FiUpload, FiDownload, FiRefreshCw, FiHeart, FiClock, FiSliders, FiZoomIn, FiZoomOut, FiEye, FiCheck, FiX, FiShoppingCart } from 'react-icons/fi';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
 import './PaintPreview.css';
 
-// ── Brand Paint Colors ──────────────────────────────────────
-const BRAND_COLORS = [
-    { name: 'Coral Bliss', hex: '#FF6B6B', brand: 'PaintPro' },
-    { name: 'Ocean Teal', hex: '#2EC4B6', brand: 'PaintPro' },
-    { name: 'Sky Dream', hex: '#4CC9F0', brand: 'PaintPro' },
-    { name: 'Sunny Gold', hex: '#FFD166', brand: 'PaintPro' },
-    { name: 'Lavender Mist', hex: '#C3B1E1', brand: 'PaintPro' },
-    { name: 'Sage Green', hex: '#87C38F', brand: 'PaintPro' },
-    { name: 'Dusty Rose', hex: '#E8A0BF', brand: 'PaintPro' },
-    { name: 'Slate Blue', hex: '#6B8CAE', brand: 'PaintPro' },
-    { name: 'Warm Ivory', hex: '#F5E6C8', brand: 'PaintPro' },
-    { name: 'Charcoal', hex: '#4A4E69', brand: 'PaintPro' },
-    { name: 'Mint Fresh', hex: '#A8DADC', brand: 'PaintPro' },
-    { name: 'Terracotta', hex: '#C97B63', brand: 'PaintPro' },
-    { name: 'Midnight Navy', hex: '#1B2A4A', brand: 'PaintPro' },
-    { name: 'Peach Cream', hex: '#FFCBA4', brand: 'PaintPro' },
-    { name: 'Forest Green', hex: '#3A7D44', brand: 'PaintPro' },
-    { name: 'Blush Pink', hex: '#FFB5C8', brand: 'PaintPro' },
-    { name: 'Steel Gray', hex: '#8D99AE', brand: 'PaintPro' },
-    { name: 'Butter Yellow', hex: '#FFF3B0', brand: 'PaintPro' },
-    { name: 'Deep Plum', hex: '#6D2B3D', brand: 'PaintPro' },
-    { name: 'Arctic White', hex: '#F8F9FA', brand: 'PaintPro' },
-    { name: 'Brick Red', hex: '#C1440E', brand: 'PaintPro' },
-    { name: 'Aqua Marine', hex: '#7FFFD4', brand: 'PaintPro' },
-    { name: 'Mocha Brown', hex: '#7B5E57', brand: 'PaintPro' },
-    { name: 'Lemon Zest', hex: '#F9E04B', brand: 'PaintPro' },
-];
+// Dynamic colors will be loaded from actual products
 
 const STEPS = ['Upload', 'Choose Color', 'Preview', 'Download'];
 
@@ -73,6 +50,7 @@ const PaintPreview = () => {
     const origCanvasRef = useRef(null);
     const fileInputRef = useRef(null);
     const animFrameRef = useRef(null);
+    const { addToCart } = useCart();
 
     const [originalImage, setOriginalImage] = useState(null); // ImageData
     const [originalSrc, setOriginalSrc] = useState(null);
@@ -93,10 +71,53 @@ const PaintPreview = () => {
     const [colorApplied, setColorApplied] = useState(false);
     const [activeTab, setActiveTab] = useState('brand'); // 'brand' | 'custom'
 
+    // Products for Buy This Color panel
+    const [products, setProducts] = useState([]);
+    const [productsLoading, setProductsLoading] = useState(true);
+    const [selectedSizes, setSelectedSizes] = useState({});
+    const [addedId, setAddedId] = useState(null);
+
+    // Get unique colors from products
+    const productColors = React.useMemo(() => {
+        const colors = [];
+        const seen = new Set();
+        products.forEach(p => {
+            if (p.colorHex && !seen.has(p.colorHex.toLowerCase())) {
+                seen.add(p.colorHex.toLowerCase());
+                colors.push({ name: p.name, hex: p.colorHex, brand: p.category || 'PaintPro' });
+            }
+        });
+        return colors;
+    }, [products]);
+
+    // Auto-select first available color if current is default
+    useEffect(() => {
+        if (productColors.length > 0 && selectedColor === '#4CC9F0') {
+            setSelectedColor(productColors[0].hex);
+            setCustomColor(productColors[0].hex);
+        }
+    }, [productColors]);
     // Load default wall on mount
     useEffect(() => {
         const src = createDefaultWall();
         loadImageFromSrc(src);
+    }, []);
+
+    // Fetch products from Firestore
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+                const snap = await getDocs(q);
+                const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                setProducts(all);
+            } catch (err) {
+                console.error('Products fetch error:', err);
+            } finally {
+                setProductsLoading(false);
+            }
+        };
+        fetchProducts();
     }, []);
 
     const loadImageFromSrc = (src) => {
@@ -146,7 +167,7 @@ const PaintPreview = () => {
         // Add to history
         const existing = colorHistory.find(c => c.hex === colorHex);
         if (!existing) {
-            setColorHistory(prev => [{ hex: colorHex, name: BRAND_COLORS.find(c => c.hex === colorHex)?.name || colorHex }, ...prev].slice(0, 10));
+            setColorHistory(prev => [{ hex: colorHex, name: productColors.find(c => c.hex.toLowerCase() === colorHex.toLowerCase())?.name || colorHex }, ...prev].slice(0, 10));
         }
 
         // Use requestAnimationFrame to avoid blocking UI
@@ -234,6 +255,13 @@ const PaintPreview = () => {
         applyColor(hex);
     };
 
+    const handleBuyAddToCart = (product) => {
+        const size = selectedSizes[product.id] || (product.sizes?.length > 0 ? product.sizes[0] : null);
+        addToCart(product, size);
+        setAddedId(product.id);
+        setTimeout(() => setAddedId(null), 1500);
+    };
+
     return (
         <div className="pp-page">
             {/* Header */}
@@ -302,7 +330,7 @@ const PaintPreview = () => {
 
                             {activeTab === 'brand' && (
                                 <div className="pp-color-grid">
-                                    {BRAND_COLORS.map(c => (
+                                    {productColors.map(c => (
                                         <div
                                             key={c.hex}
                                             className={`pp-color-swatch ${selectedColor === c.hex ? 'selected' : ''}`}
@@ -315,20 +343,30 @@ const PaintPreview = () => {
                                             {selectedColor === c.hex && <FiCheck size={12} color="white" />}
                                         </div>
                                     ))}
+                                    {productColors.length === 0 && !productsLoading && (
+                                        <div style={{gridColumn: '1 / -1', textAlign: 'center', padding: '20px', color: '#6c757d', fontSize: '0.9rem'}}>
+                                            No colors available yet.<br/>Add products in the Admin Panel.
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
                             {activeTab === 'custom' && (
                                 <div className="pp-custom-color">
-                                    <input
-                                        type="color"
-                                        value={customColor}
-                                        onChange={e => { setCustomColor(e.target.value); setSelectedColor(e.target.value); }}
-                                        className="pp-color-picker-input"
-                                    />
-                                    <div className="pp-custom-preview" style={{ background: customColor }}>
-                                        <span>{customColor.toUpperCase()}</span>
+                                    <div className="pp-color-picker-wrapper">
+                                        <input
+                                            type="color"
+                                            value={customColor}
+                                            onChange={e => { setCustomColor(e.target.value); setSelectedColor(e.target.value); }}
+                                            className="pp-color-picker-input"
+                                        />
+                                        <div className="pp-custom-preview" style={{ background: customColor }}>
+                                            <span>{customColor.toUpperCase()}</span>
+                                        </div>
                                     </div>
+                                    <p style={{ fontSize: '0.8rem', color: '#6c757d', textAlign: 'center', marginTop: '-8px' }}>
+                                        Click the box to pick a custom paint color
+                                    </p>
                                 </div>
                             )}
 
@@ -360,7 +398,7 @@ const PaintPreview = () => {
                                 <div className="pp-selected-dot" style={{ background: selectedColor }} />
                                 <div>
                                     <div className="pp-selected-name">
-                                        {BRAND_COLORS.find(c => c.hex === selectedColor)?.name || 'Custom Color'}
+                                        {productColors.find(c => c.hex.toLowerCase() === selectedColor.toLowerCase())?.name || 'Custom Color'}
                                     </div>
                                     <div className="pp-selected-hex">{selectedColor.toUpperCase()}</div>
                                 </div>
@@ -523,7 +561,7 @@ const PaintPreview = () => {
                         {/* Quick Color Row */}
                         <div className="pp-quick-colors">
                             <span className="pp-quick-label">Quick apply:</span>
-                            {BRAND_COLORS.slice(0, 10).map(c => (
+                            {productColors.slice(0, 10).map(c => (
                                 <button
                                     key={c.hex}
                                     className={`pp-quick-dot ${selectedColor === c.hex ? 'selected' : ''}`}
@@ -533,6 +571,95 @@ const PaintPreview = () => {
                                 />
                             ))}
                         </div>
+
+                        {/* ── Buy This Color Panel ─────────────────── */}
+                        {colorApplied && (
+                            <div className="pp-buy-panel">
+                                <div className="pp-buy-header">
+                                    <div className="pp-buy-color-chip" style={{ background: selectedColor }} />
+                                    <div>
+                                        <h3 className="pp-buy-title">
+                                            {productColors.some(c => c.hex.toLowerCase() === selectedColor.toLowerCase()) ? 'Buy This Color' : 'Custom Color'}
+                                        </h3>
+                                        <p className="pp-buy-subtitle">
+                                            {productColors.some(c => c.hex.toLowerCase() === selectedColor.toLowerCase())
+                                                ? `${productColors.find(c => c.hex.toLowerCase() === selectedColor.toLowerCase())?.name} — Available below`
+                                                : `${selectedColor.toUpperCase()} — Custom matched paint`
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                                {productsLoading ? (
+                                    <div className="pp-buy-loading">
+                                        <div className="pp-spinner" />
+                                        <span>Loading products...</span>
+                                    </div>
+                                ) : (!productColors.some(c => c.hex.toLowerCase() === selectedColor.toLowerCase()) || products.filter(p => p.colorHex?.toLowerCase() === selectedColor.toLowerCase()).length === 0) ? (
+                                    <div className="pp-buy-empty" style={{ background: '#f8f9fa', padding: '24px', borderRadius: '16px', textAlign: 'center', border: '1.5px dashed #dee2e6', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                                        <div style={{ fontSize: '2.5rem' }}>🎨</div>
+                                        <p style={{ margin: 0, color: '#495057', fontSize: '1rem', lineHeight: '1.5' }}>
+                                            <strong>Love this custom color?</strong><br/>
+                                            We can mix it perfectly for you in any finish!<br/>
+                                            <a href="tel:+919999999999" className="pp-btn" style={{ textDecoration: 'none', display: 'inline-block', marginTop: '12px', padding: '10px 24px', background: '#ff6b6b', color: 'white', borderRadius: '8px', fontWeight: 'bold' }}>Call to Order</a>
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="pp-buy-grid">
+                                        {products.filter(p => p.colorHex?.toLowerCase() === selectedColor.toLowerCase()).map(product => {
+                                            const currentSize = selectedSizes[product.id] || (product.sizes?.length > 0 ? product.sizes[0] : null);
+                                            const currentStock = currentSize ? currentSize.stock : product.stock;
+                                            const displayPrice = currentSize ? currentSize.price : product.price;
+                                            const isAdded = addedId === product.id;
+                                            return (
+                                                <div key={product.id} className="pp-buy-card">
+                                                    <div className="pp-buy-img-wrap">
+                                                        {product.imageUrl
+                                                            ? <img src={product.imageUrl} alt={product.name} className="pp-buy-img" />
+                                                            : <div className="pp-buy-img-placeholder">🎨</div>
+                                                        }
+                                                    </div>
+                                                    <div className="pp-buy-info">
+                                                        <span className="pp-buy-category">{product.category}</span>
+                                                        <p className="pp-buy-name">{product.name}</p>
+                                                        <p className="pp-buy-price">₹{displayPrice?.toLocaleString()}</p>
+                                                        {product.sizes?.length > 0 && (
+                                                            <div className="pp-buy-size-pills">
+                                                                {product.sizes.map(s => {
+                                                                    const sel = selectedSizes[product.id] || product.sizes[0];
+                                                                    return (
+                                                                        <button
+                                                                            key={s.label}
+                                                                            className={`pp-buy-size-pill ${sel.label === s.label ? 'active' : ''}`}
+                                                                            onClick={() => setSelectedSizes(prev => ({ ...prev, [product.id]: s }))}
+                                                                        >
+                                                                            {s.label}
+                                                                        </button>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        )}
+                                                        <div className="pp-buy-footer">
+                                                            <span className={`pp-buy-stock ${currentStock === 0 ? 'out' : currentStock <= 5 ? 'low' : 'in'}`}>
+                                                                {currentStock === 0 ? 'Out of Stock' : currentStock <= 5 ? `Only ${currentStock} left` : 'In Stock'}
+                                                            </span>
+                                                            <button
+                                                                className={`pp-buy-add-btn ${isAdded ? 'added' : ''}`}
+                                                                onClick={() => handleBuyAddToCart(product)}
+                                                                disabled={currentStock === 0}
+                                                            >
+                                                                {isAdded
+                                                                    ? <><FiCheck size={13} /> Added!</>
+                                                                    : <><FiShoppingCart size={13} /> Add</>}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
