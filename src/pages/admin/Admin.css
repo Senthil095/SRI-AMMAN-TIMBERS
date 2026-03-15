@@ -362,3 +362,694 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ============================================
+   Sidebar Sections
+   ============================================ */
+.sidebar-section {
+    margin-bottom: 4px;
+}
+
+.sidebar-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #adb5bd;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 12px 14px 4px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ============================================
+   Topbar Actions & Notification Bell
+   ============================================ */
+.topbar-actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-bell {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #f8f9fa;
+    border: 1.5px solid #f1f3f5;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+.notification-bell:hover {
+    background: #fff0f0;
+    color: #ff6b6b;
+    border-color: rgba(255, 107, 107, 0.2);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 6px rgba(255, 107, 107, 0.4);
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    width: 340px;
+    background: white;
+    border: 1.5px solid #f1f3f5;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    z-index: 200;
+    animation: fadeIn 0.25s ease both;
+    overflow: hidden;
+}
+
+.notification-dropdown-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.notification-dropdown-header h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #212529;
+    font-family: 'Inter', sans-serif;
+}
+
+.notification-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #adb5bd;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.notification-list {
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid #f8f9fa;
+    transition: background 0.15s ease;
+    cursor: pointer;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-item.unread {
+    background: #fff8f5;
+    border-left: 3px solid #ff6b6b;
+}
+
+.notification-text {
+    font-size: 0.82rem;
+    color: #343a40;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.notification-time {
+    font-size: 0.7rem;
+    color: #adb5bd;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ============================================
+   Dashboard Widgets
+   ============================================ */
+.dashboard-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.dashboard-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+/* CSS Bar Chart */
+.chart-container {
+    padding: 8px 0;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 160px;
+    padding: 0 8px;
+}
+
+.chart-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.chart-bar {
+    width: 100%;
+    max-width: 40px;
+    border-radius: 6px 6px 2px 2px;
+    background: linear-gradient(180deg, #ff6b6b, #e85555);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 4px;
+    position: relative;
+}
+
+.chart-bar:hover {
+    filter: brightness(1.1);
+    transform: scaleY(1.05);
+}
+
+.chart-bar-label {
+    font-size: 0.68rem;
+    color: #adb5bd;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    text-align: center;
+}
+
+.chart-bar-value {
+    font-size: 0.68rem;
+    color: #495057;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+/* Low Stock Alert */
+.low-stock-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.low-stock-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #fff8f5;
+    border: 1px solid #fee2e2;
+    transition: all 0.2s ease;
+}
+
+.low-stock-item:hover {
+    background: #fee2e2;
+}
+
+.low-stock-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #343a40;
+    font-family: 'Inter', sans-serif;
+}
+
+.low-stock-count {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #dc2626;
+    background: #fee2e2;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Attendance Summary Widget */
+.attendance-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.attendance-summary-card {
+    text-align: center;
+    padding: 16px 12px;
+    border-radius: 12px;
+    background: #f8f9fa;
+    border: 1px solid #f1f3f5;
+    transition: all 0.2s ease;
+}
+
+.attendance-summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.attendance-summary-card .att-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    line-height: 1;
+}
+
+.attendance-summary-card .att-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-top: 4px;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: white;
+    border: 1.5px solid #f1f3f5;
+    color: #495057;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.quick-action-btn:hover {
+    border-color: rgba(255, 107, 107, 0.3);
+    background: #fff0f0;
+    color: #ff6b6b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.1);
+}
+
+/* ============================================
+   Filter Bar (reusable across modules)
+   ============================================ */
+.emp-filters,
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 14px 10px 40px;
+    border-radius: 12px;
+    border: 1.5px solid #e9ecef;
+    background: #f8f9fa;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    color: #212529;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.search-input:focus {
+    border-color: #ff6b6b;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.12);
+}
+
+/* ============================================
+   Employee Avatar (reused)
+   ============================================ */
+.emp-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Detail Modal / Slide Panel
+   ============================================ */
+.detail-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.detail-modal {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 640px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: scaleIn 0.3s ease both;
+}
+
+.detail-modal-header {
+    padding: 24px 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.detail-modal-header h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #212529;
+    font-family: 'Inter', sans-serif;
+}
+
+.detail-modal-body {
+    padding: 24px 28px 28px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f3f5;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #212529;
+    font-weight: 600;
+    text-align: right;
+}
+
+/* ============================================
+   Status Select (inline)
+   ============================================ */
+.status-select {
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    background: #f8f9fa;
+    cursor: pointer;
+    outline: none;
+}
+
+.status-select:focus {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+}
+
+/* ============================================
+   Invoice Print Styles
+   ============================================ */
+.invoice-container {
+    background: white;
+    border-radius: 20px;
+    border: 1.5px solid #f1f3f5;
+    padding: 40px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f3f5;
+}
+
+.invoice-logo h2 {
+    font-size: 1.5rem;
+    color: #ff6b6b;
+    font-family: 'Playfair Display', serif;
+}
+
+.invoice-logo p {
+    font-size: 0.8rem;
+    color: #adb5bd;
+    font-family: 'Inter', sans-serif;
+}
+
+.invoice-info {
+    text-align: right;
+    font-size: 0.82rem;
+    font-family: 'Inter', sans-serif;
+    color: #495057;
+    line-height: 1.7;
+}
+
+.invoice-table {
+    width: 100%;
+    margin: 24px 0;
+    border-collapse: collapse;
+}
+
+.invoice-table th {
+    background: #f8f9fa;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e9ecef;
+    font-family: 'Inter', sans-serif;
+}
+
+.invoice-table td {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    color: #343a40;
+    border-bottom: 1px solid #f1f3f5;
+    font-family: 'Inter', sans-serif;
+}
+
+.invoice-total {
+    text-align: right;
+    margin-top: 16px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #212529;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ============================================
+   Report Tabs
+   ============================================ */
+.report-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.report-tab {
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1.5px solid #e9ecef;
+    background: white;
+    color: #6c757d;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.report-tab:hover {
+    border-color: rgba(255, 107, 107, 0.3);
+    color: #ff6b6b;
+}
+
+.report-tab.active {
+    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.25);
+}
+
+/* ============================================
+   Settings Layout
+   ============================================ */
+.settings-section {
+    margin-bottom: 32px;
+}
+
+.settings-section h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 16px;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.settings-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.settings-toggle-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #495057;
+    font-family: 'Inter', sans-serif;
+}
+
+.toggle-switch {
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: #dee2e6;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.25s ease;
+}
+
+.toggle-switch.active {
+    background: linear-gradient(135deg, #ff6b6b, #e85555);
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+}
+
+.toggle-switch.active::after {
+    left: 23px;
+}
+
+/* ============================================
+   Extra Responsive
+   ============================================ */
+@media (max-width: 1024px) {
+    .dashboard-grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-grid-3 {
+        grid-template-columns: 1fr;
+    }
+    .attendance-summary-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .notification-dropdown {
+        width: 290px;
+        right: -40px;
+    }
+    .quick-actions {
+        flex-direction: column;
+    }
+    .attendance-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .admin-sidebar,
+    .admin-topbar,
+    .no-print {
+        display: none !important;
+    }
+    .admin-main {
+        margin-left: 0 !important;
+    }
+    .admin-content {
+        padding: 0 !important;
+    }
+    .invoice-container {
+        box-shadow: none;
+        border: none;
+    }
+}

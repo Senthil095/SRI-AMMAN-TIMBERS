@@ -21,6 +21,15 @@ import ProductManagement from './pages/admin/ProductManagement';
 import EmployeeManagement from './pages/admin/EmployeeManagement';
 import Attendance from './pages/admin/Attendance';
 import SalaryManagement from './pages/admin/SalaryManagement';
+import OrderManagement from './pages/admin/OrderManagement';
+import CustomerManagement from './pages/admin/CustomerManagement';
+import InventoryManagement from './pages/admin/InventoryManagement';
+import SupplierManagement from './pages/admin/SupplierManagement';
+import PurchaseManagement from './pages/admin/PurchaseManagement';
+import BillingManagement from './pages/admin/BillingManagement';
+import Reports from './pages/admin/Reports';
+import ActivityLogs from './pages/admin/ActivityLogs';
+import Settings from './pages/admin/Settings';
 
 // Protected Route
 import ProtectedRoute from './components/ProtectedRoute';
@@ -59,36 +68,20 @@ function App() {
                 />
 
                 {/* Admin Routes */}
-                <Route
-                    path="/admin"
-                    element={
-                        <AdminDashboard />
-                    }
-                />
-                <Route
-                    path="/admin/products"
-                    element={
-                        <ProductManagement />
-                    }
-                />
-                <Route
-                    path="/admin/employees"
-                    element={
-                        <EmployeeManagement />
-                    }
-                />
-                <Route
-                    path="/admin/attendance"
-                    element={
-                        <Attendance />
-                    }
-                />
-                <Route
-                    path="/admin/salary"
-                    element={
-                        <SalaryManagement />
-                    }
-                />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/products" element={<ProductManagement />} />
+                <Route path="/admin/employees" element={<EmployeeManagement />} />
+                <Route path="/admin/attendance" element={<Attendance />} />
+                <Route path="/admin/salary" element={<SalaryManagement />} />
+                <Route path="/admin/orders" element={<OrderManagement />} />
+                <Route path="/admin/customers" element={<CustomerManagement />} />
+                <Route path="/admin/inventory" element={<InventoryManagement />} />
+                <Route path="/admin/suppliers" element={<SupplierManagement />} />
+                <Route path="/admin/purchases" element={<PurchaseManagement />} />
+                <Route path="/admin/billing" element={<BillingManagement />} />
+                <Route path="/admin/reports" element={<Reports />} />
+                <Route path="/admin/activity-logs" element={<ActivityLogs />} />
+                <Route path="/admin/settings" element={<Settings />} />
 
                 {/* Fallback */}
                 <Route path="*" element={<Navigate to="/" replace />} />
