@@ -27,12 +27,25 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (email, password, displayName) => {
         const result = await createUserWithEmailAndPassword(auth, email, password);
+        const timestamp = new Date().toISOString();
+        
         await setDoc(doc(db, 'users', result.user.uid), {
             email,
             displayName,
             role: 'customer',
-            createdAt: new Date().toISOString(),
+            createdAt: timestamp,
         });
+
+        await setDoc(doc(db, 'customers', result.user.uid), {
+            name: displayName,
+            email: email,
+            phone: '',
+            address: '',
+            city: '',
+            pincode: '',
+            registrationDate: timestamp
+        });
+
         return result;
     };
 
@@ -51,12 +64,23 @@ export const AuthProvider = ({ children }) => {
             const userDoc = await getDoc(userDocRef);
 
             if (!userDoc.exists()) {
+                const timestamp = new Date().toISOString();
                 await setDoc(userDocRef, {
                     email: user.email,
                     displayName: user.displayName,
                     role: 'customer',
-                    createdAt: new Date().toISOString(),
+                    createdAt: timestamp,
                     photoURL: user.photoURL,
+                });
+
+                await setDoc(doc(db, 'customers', user.uid), {
+                    name: user.displayName || user.email?.split('@')[0] || 'User',
+                    email: user.email,
+                    phone: '',
+                    address: '',
+                    city: '',
+                    pincode: '',
+                    registrationDate: timestamp
                 });
             }
             return result;

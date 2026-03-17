@@ -104,10 +104,10 @@ const AdminDashboard = () => {
     };
 
     const STAT_CARDS = [
-        { label: 'Total Products', value: stats.products, icon: <FiPackage />, color: '#4cc9f0', bg: 'rgba(76,201,240,0.12)' },
-        { label: 'Employees', value: stats.employees, icon: <FiUsers />, color: '#4ade80', bg: 'rgba(74,222,128,0.12)' },
-        { label: 'Total Orders', value: stats.orders, icon: <FiShoppingBag />, color: '#e63946', bg: 'rgba(230,57,70,0.12)' },
-        { label: 'Total Revenue', value: `₹${stats.revenue.toLocaleString()}`, icon: <FiTrendingUp />, color: '#f4a261', bg: 'rgba(244,162,97,0.12)' },
+        { label: 'Total Products', value: stats.products, icon: <FiPackage />, color: '#0891b2', bg: 'rgba(8,145,178,0.12)' },
+        { label: 'Employees', value: stats.employees, icon: <FiUsers />, color: '#059669', bg: 'rgba(5,150,105,0.12)' },
+        { label: 'Total Orders', value: stats.orders, icon: <FiShoppingBag />, color: '#dc2626', bg: 'rgba(220,38,38,0.12)' },
+        { label: 'Total Revenue', value: `₹${stats.revenue.toLocaleString()}`, icon: <FiTrendingUp />, color: '#d97706', bg: 'rgba(217,119,6,0.12)' },
     ];
 
     const maxSale = Math.max(...salesData.map(d => d.value), 1);

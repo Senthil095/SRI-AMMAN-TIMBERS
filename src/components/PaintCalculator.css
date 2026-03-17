@@ -1,0 +1,337 @@
+/* ── Paint Calculator Card ─────────────────────────────────── */
+
+.pc-card {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #fafbff 100%);
+    border: 1.5px solid #e2e6f0;
+    border-radius: 20px;
+    padding: 24px;
+    margin: 8px 0;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.pc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2ec4b6, #9b5de5, #ff6b6b);
+    border-radius: 20px 20px 0 0;
+}
+
+.pc-card:hover {
+    box-shadow: 0 8px 36px rgba(0, 0, 0, 0.07);
+    border-color: #d0d5e3;
+}
+
+/* Header */
+.pc-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pc-header-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e8faf9, #d0f5f1);
+    color: #2ec4b6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pc-header-text h3 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.pc-header-text p {
+    font-size: 0.72rem;
+    color: #adb5bd;
+    margin: 2px 0 0;
+    font-weight: 500;
+}
+
+/* Input Grid */
+.pc-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.pc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pc-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.pc-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.pc-label-icon {
+    color: #9b5de5;
+    display: flex;
+    align-items: center;
+}
+
+.pc-input,
+.pc-select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e9ecef;
+    border-radius: 12px;
+    background: white;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.pc-input::placeholder {
+    color: #ced4da;
+    font-weight: 400;
+}
+
+.pc-input:focus,
+.pc-select:focus {
+    border-color: #9b5de5;
+    box-shadow: 0 0 0 3px rgba(155, 93, 229, 0.1);
+}
+
+.pc-input.error {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.pc-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+
+/* Error Message */
+.pc-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #ff6b6b;
+    padding: 8px 14px;
+    background: #fff5f5;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    animation: pcShake 0.35s ease;
+}
+
+@keyframes pcShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+}
+
+/* Divider */
+.pc-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e2e6f0, transparent);
+    margin: 4px 0 16px;
+}
+
+/* Result Section */
+.pc-result {
+    animation: pcFadeIn 0.35s ease;
+}
+
+@keyframes pcFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pc-result-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #f0fffe 0%, #eef0ff 100%);
+    border-radius: 14px;
+    border: 1.5px solid #d0f5f1;
+    margin-bottom: 10px;
+}
+
+.pc-result-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pc-result-label svg {
+    color: #2ec4b6;
+}
+
+.pc-result-value {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #1a1a2e;
+    letter-spacing: -0.02em;
+}
+
+.pc-result-value span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-left: 4px;
+}
+
+/* Recommendation */
+.pc-recommend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #fef9ef 0%, #fff5f0 100%);
+    border-radius: 12px;
+    border: 1.5px solid #fde8d0;
+    margin-bottom: 14px;
+}
+
+.pc-recommend-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.pc-recommend-text {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6c757d;
+    line-height: 1.4;
+}
+
+.pc-recommend-text strong {
+    color: #1a1a2e;
+    font-weight: 800;
+}
+
+/* Add to Cart Button */
+.pc-add-btn {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2ec4b6, #24a89c);
+    color: white;
+    font-size: 0.92rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 6px 22px rgba(46, 196, 182, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+.pc-add-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.pc-add-btn:hover::before {
+    left: 100%;
+}
+
+.pc-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(46, 196, 182, 0.4);
+}
+
+.pc-add-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 14px rgba(46, 196, 182, 0.25);
+}
+
+.pc-add-btn.added {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    box-shadow: 0 6px 22px rgba(22, 163, 74, 0.3);
+}
+
+/* Empty state */
+.pc-empty {
+    text-align: center;
+    padding: 8px 0 4px;
+    font-size: 0.78rem;
+    color: #adb5bd;
+    font-weight: 500;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .pc-card {
+        padding: 18px 16px;
+        border-radius: 16px;
+    }
+
+    .pc-inputs {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .pc-result-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 14px 16px;
+    }
+
+    .pc-result-value {
+        font-size: 1.2rem;
+    }
+
+    .pc-add-btn {
+        padding: 13px 16px;
+        font-size: 0.85rem;
+    }
+}

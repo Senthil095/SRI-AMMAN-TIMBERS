@@ -5,6 +5,7 @@ import { db } from '../firebase';
 import { useCart } from '../context/CartContext';
 import { FiShoppingCart, FiCheck, FiChevronRight, FiTruck, FiShield, FiAward, FiMinus, FiPlus, FiHeart, FiShare2, FiPackage } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import PaintCalculator from '../components/PaintCalculator';
 import './ProductDetail.css';
 
 const TRUST_BADGES = [
@@ -212,6 +213,9 @@ const ProductDetail = () => {
                                 <span className="pd-total-price">₹{(displayPrice * quantity).toLocaleString()}</span>
                             </div>
                         )}
+
+                        {/* Paint Calculator */}
+                        <PaintCalculator />
 
                         {/* Add to Cart */}
                         <div className="pd-actions">

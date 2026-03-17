@@ -111,9 +111,14 @@ const Navbar = () => {
                                         <div className="dropdown-role">{isAdmin ? 'Admin' : 'Customer'}</div>
                                     </div>
                                     {!isAdmin && (
-                                        <Link to="/orders" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
-                                            <FiPackage size={15} /> My Orders
-                                        </Link>
+                                        <>
+                                            <Link to="/profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                                                <FiUser size={15} /> My Profile
+                                            </Link>
+                                            <Link to="/orders" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                                                <FiPackage size={15} /> My Orders
+                                            </Link>
+                                        </>
                                     )}
                                     {isAdmin && (
                                         <Link to="/admin" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
@@ -150,7 +155,10 @@ const Navbar = () => {
                 <div className="mobile-menu">
                     <Link to="/" className="mobile-nav-link">Shop</Link>
                     {currentUser && !isAdmin && (
-                        <Link to="/orders" className="mobile-nav-link">My Orders</Link>
+                        <>
+                            <Link to="/orders" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>My Orders</Link>
+                            <Link to="/profile" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>My Profile</Link>
+                        </>
                     )}
                     {isAdmin && (
                         <Link to="/admin" className="mobile-nav-link">Admin Panel</Link>
