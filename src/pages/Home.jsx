@@ -17,10 +17,10 @@ const WHY_CHOOSE = [
 ];
 
 const TESTIMONIALS = [
-    { name: 'Priya Sharma', role: 'Interior Designer', text: 'PaintPro has the best selection of interior paints I\'ve ever seen. The quality is exceptional and delivery was super fast!', rating: 5, avatar: 'P' },
+    { name: 'Priya Sharma', role: 'Interior Designer', text: 'Sri Amman Paints has the best selection of interior paints I\'ve ever seen. The quality is exceptional and delivery was super fast!', rating: 5, avatar: 'P' },
     { name: 'Rajan Kumar', role: 'Homeowner', text: 'Ordered Asian Paints Royale for my living room. The color matched perfectly and coverage was amazing. Highly recommend!', rating: 5, avatar: 'R' },
     { name: 'Meena Iyer', role: 'Architect', text: 'Great variety of exterior paints. The team helped me pick the right primer for my project. Excellent service!', rating: 5, avatar: 'M' },
-    { name: 'Suresh Babu', role: 'Contractor', text: 'I order in bulk regularly. PaintPro always delivers on time and the prices are very competitive. My go-to store!', rating: 4, avatar: 'S' },
+    { name: 'Suresh Babu', role: 'Contractor', text: 'I order in bulk regularly. Sri Amman Paints always delivers on time and the prices are very competitive. My go-to store!', rating: 4, avatar: 'S' },
 ];
 
 const SkeletonCard = () => (
@@ -293,7 +293,7 @@ const Home = () => {
                 <section className="why-section">
                     <div className="container">
                         <div className="why-header fade-in">
-                            <h2 className="section-title">Why Choose PaintPro?</h2>
+                            <h2 className="section-title">Why Choose Sri Amman Paints?</h2>
                             <p className="section-subtitle">We make painting your space easy, affordable, and beautiful</p>
                         </div>
                         <div className="why-grid">
@@ -388,8 +388,8 @@ const Home = () => {
                     <div className="footer-grid">
                         <div className="footer-brand">
                             <div className="footer-logo">
-                                <div className="logo-icon">P</div>
-                                <span className="logo-text">Paint<span>Pro</span></span>
+                                <div className="logo-icon">S</div>
+                                <span className="logo-text">Sri Amman <span>Paints</span></span>
                             </div>
                             <p className="footer-tagline">
                                 Bringing color and life to every space since 2020. Your trusted partner for premium paints.
@@ -424,7 +424,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="footer-bottom">
-                        <p>© 2026 PaintPro. All rights reserved.</p>
+                        <p>© 2026 Sri Amman Paints. All rights reserved.</p>
                         <div className="footer-bottom-links">
                             <a href="#">Terms</a>
                             <a href="#">Privacy</a>

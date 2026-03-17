@@ -122,6 +122,7 @@ const AdminLayout = ({ children, title, subtitle }) => {
     }, []);
 
     const handleLogout = async () => {
+        sessionStorage.removeItem('adminToken');
         await logout();
         toast.success('Logged out');
         navigate('/');
@@ -134,9 +135,9 @@ const AdminLayout = ({ children, title, subtitle }) => {
             {/* Sidebar */}
             <aside className="admin-sidebar">
                 <div className="sidebar-logo">
-                    <div className="sidebar-logo-icon">P</div>
+                    <div className="sidebar-logo-icon">S</div>
                     <div>
-                        <div className="sidebar-logo-text">PaintPro</div>
+                        <div className="sidebar-logo-text">Sri Amman Paints</div>
                         <div className="sidebar-logo-sub">Admin Panel</div>
                     </div>
                 </div>

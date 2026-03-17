@@ -52,8 +52,8 @@ const Login = () => {
 
             <div className="auth-card">
                 <div className="auth-logo">
-                    <div className="logo-icon">P</div>
-                    <span className="logo-text">Paint<span>Pro</span></span>
+                    <div className="logo-icon">S</div>
+                    <span className="logo-text">Sri Amman <span>Paints</span></span>
                 </div>
 
                 <h1 className="auth-title">Welcome Back</h1>

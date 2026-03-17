@@ -84,7 +84,7 @@ const PaintPreview = () => {
         products.forEach(p => {
             if (p.colorHex && !seen.has(p.colorHex.toLowerCase())) {
                 seen.add(p.colorHex.toLowerCase());
-                colors.push({ name: p.name, hex: p.colorHex, brand: p.category || 'PaintPro' });
+                colors.push({ name: p.name, hex: p.colorHex, brand: p.category || 'Sri Amman Paints' });
             }
         });
         return colors;

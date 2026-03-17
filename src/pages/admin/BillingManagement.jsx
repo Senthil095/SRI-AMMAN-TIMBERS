@@ -71,7 +71,7 @@ const BillingManagement = () => {
                     <div className="invoice-container" id="invoice-print">
                         <div className="invoice-header">
                             <div className="invoice-logo">
-                                <h2>PaintPro</h2>
+                                <h2>Sri Amman Paints</h2>
                                 <p>Paint Shop & Retail</p>
                             </div>
                             <div className="invoice-info">

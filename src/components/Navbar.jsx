@@ -56,8 +56,8 @@ const Navbar = () => {
             <div className="navbar-inner">
                 {/* Logo */}
                 <Link to="/" className="navbar-logo">
-                    <div className="logo-icon">P</div>
-                    <span className="logo-text">Paint<span>Pro</span></span>
+                    <div className="logo-icon">S</div>
+                    <span className="logo-text">Sri Amman <span>Paints</span></span>
                 </Link>
 
                 {/* Desktop Nav Links */}

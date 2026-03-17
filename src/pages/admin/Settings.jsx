@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import './Admin.css';
 
 const DEFAULT_SETTINGS = {
-    shop: { name: 'PaintPro', address: '', phone: '', email: '' },
+    shop: { name: 'Sri Amman Paints', address: '', phone: '', email: '' },
     business: { taxPercent: 18, currency: 'INR', deliveryCharges: 0, workingHours: '9:00 AM - 7:00 PM' },
     system: { enableNotifications: true, enableDarkMode: false },
 };

@@ -46,7 +46,7 @@ const Orders = () => {
             <div className="container">
                 <div className="orders-header fade-in">
                     <h1 className="section-title">My Orders</h1>
-                    <p className="section-subtitle">Track all your PaintPro purchases</p>
+                    <p className="section-subtitle">Track all your Sri Amman Paints purchases</p>
                 </div>
 
                 {loading ? (

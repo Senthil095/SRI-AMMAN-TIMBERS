@@ -31,12 +31,18 @@ import Reports from './pages/admin/Reports';
 import ActivityLogs from './pages/admin/ActivityLogs';
 import Settings from './pages/admin/Settings';
 
+// Admin Authentication Route
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
+
 // Protected Route
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
     const { userRole } = useAuth();
     const location = useLocation();
+    
+    // Hide navbar on all admin routes, including login
     const isAdminRoute = location.pathname.startsWith('/admin');
 
     return (
@@ -67,21 +73,24 @@ function App() {
                     }
                 />
 
-                {/* Admin Routes */}
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/admin/products" element={<ProductManagement />} />
-                <Route path="/admin/employees" element={<EmployeeManagement />} />
-                <Route path="/admin/attendance" element={<Attendance />} />
-                <Route path="/admin/salary" element={<SalaryManagement />} />
-                <Route path="/admin/orders" element={<OrderManagement />} />
-                <Route path="/admin/customers" element={<CustomerManagement />} />
-                <Route path="/admin/inventory" element={<InventoryManagement />} />
-                <Route path="/admin/suppliers" element={<SupplierManagement />} />
-                <Route path="/admin/purchases" element={<PurchaseManagement />} />
-                <Route path="/admin/billing" element={<BillingManagement />} />
-                <Route path="/admin/reports" element={<Reports />} />
-                <Route path="/admin/activity-logs" element={<ActivityLogs />} />
-                <Route path="/admin/settings" element={<Settings />} />
+                {/* Admin Auth Route */}
+                <Route path="/admin/login" element={<AdminLogin />} />
+
+                {/* Protected Admin Routes */}
+                <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
+                <Route path="/admin/products" element={<AdminProtectedRoute><ProductManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/employees" element={<AdminProtectedRoute><EmployeeManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/attendance" element={<AdminProtectedRoute><Attendance /></AdminProtectedRoute>} />
+                <Route path="/admin/salary" element={<AdminProtectedRoute><SalaryManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/orders" element={<AdminProtectedRoute><OrderManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/customers" element={<AdminProtectedRoute><CustomerManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/inventory" element={<AdminProtectedRoute><InventoryManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/suppliers" element={<AdminProtectedRoute><SupplierManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/purchases" element={<AdminProtectedRoute><PurchaseManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/billing" element={<AdminProtectedRoute><BillingManagement /></AdminProtectedRoute>} />
+                <Route path="/admin/reports" element={<AdminProtectedRoute><Reports /></AdminProtectedRoute>} />
+                <Route path="/admin/activity-logs" element={<AdminProtectedRoute><ActivityLogs /></AdminProtectedRoute>} />
+                <Route path="/admin/settings" element={<AdminProtectedRoute><Settings /></AdminProtectedRoute>} />
 
                 {/* Fallback */}
                 <Route path="*" element={<Navigate to="/" replace />} />

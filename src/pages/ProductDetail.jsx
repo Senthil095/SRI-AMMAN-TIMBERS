@@ -113,15 +113,12 @@ const ProductDetail = () => {
                 <div className="pd-grid">
                     {/* ── Left: Product Image ───────────────────────── */}
                     <div className="pd-image-section">
-                        <div
-                            className={`pd-image-main ${imgZoom ? 'zoomed' : ''}`}
-                            onClick={() => setImgZoom(!imgZoom)}
-                        >
+                        <div className="pd-image-main">
                             {product.imageUrl
                                 ? <img src={product.imageUrl} alt={product.name} className="pd-img" />
                                 : <div className="pd-img-placeholder">🎨</div>
                             }
-                            <div className="pd-img-badge">Click to {imgZoom ? 'reset' : 'zoom'}</div>
+                            <div className="pd-img-badge">Hover to zoom</div>
                         </div>
 
                         {/* Action buttons on image */}

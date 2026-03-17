@@ -31,7 +31,7 @@ const Signup = () => {
         setLoading(true);
         try {
             await signup(form.email, form.password, form.name);
-            toast.success('Account created! Welcome to PaintPro!');
+            toast.success('Account created! Welcome to Sri Amman Paints!');
             navigate('/');
         } catch (err) {
             if (err.code === 'auth/email-already-in-use') {
@@ -47,7 +47,7 @@ const Signup = () => {
     const handleGoogleLogin = async () => {
         try {
             await googleLogin();
-            toast.success('Account created! Welcome to PaintPro!');
+            toast.success('Account created! Welcome to Sri Amman Paints!');
             navigate('/');
         } catch (err) {
             console.error(err);
@@ -65,8 +65,8 @@ const Signup = () => {
 
             <div className="auth-card">
                 <div className="auth-logo">
-                    <div className="logo-icon">P</div>
-                    <span className="logo-text">Paint<span>Pro</span></span>
+                    <div className="logo-icon">S</div>
+                    <span className="logo-text">Sri Amman <span>Paints</span></span>
                 </div>
 
                 <h1 className="auth-title">Create Account</h1>
