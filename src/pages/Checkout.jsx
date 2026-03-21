@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, addDoc, doc, serverTimestamp, runTransaction } from 'firebase/firestore';
-import { db } from '../firebase';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import { FiShoppingBag, FiMapPin, FiPhone, FiCheck } from 'react-icons/fi';
+import { FiShoppingBag, FiMapPin, FiPhone } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import './Checkout.css';
+
+// Dynamically load Razorpay script
+const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = () => {
+            resolve(true);
+        };
+        script.onerror = () => {
+            resolve(false);
+        };
+        document.body.appendChild(script);
+    });
+};
 
 const Checkout = () => {
     const { currentUser } = useAuth();
     const { cartItems, cartTotal, clearCart } = useCart();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [form, setForm] = useState({
         name: '',
         phone: '',
@@ -36,91 +48,140 @@ const Checkout = () => {
             toast.error('Your cart is empty');
             return;
         }
+
         setLoading(true);
         try {
-            await addDoc(collection(db, 'orders'), {
-                userId: currentUser.uid,
-                userEmail: currentUser.email,
-                items: cartItems.map((item) => ({
-                    id: item.id,
-                    name: item.name,
-                    price: item.selectedSize ? item.selectedSize.price : (item.discountPrice || item.price),
-                    quantity: item.quantity,
-                    imageUrl: item.imageUrl || '',
-                    selectedSize: item.selectedSize || null,
-                })),
+            // Load Razorpay Script
+            const res = await loadRazorpayScript();
+            if (!res) {
+                toast.error('Failed to load Razorpay window. Are you online?');
+                setLoading(false);
+                return;
+            }
+
+            // Prepare items and total
+            const orderItems = cartItems.map((item) => ({
+                id: item.id,
+                name: item.name,
+                price: item.selectedSize ? item.selectedSize.price : (item.discountPrice || item.price),
+                quantity: item.quantity,
+                imageUrl: item.imageUrl || '',
+                selectedSize: item.selectedSize || null,
+            }));
+
+            // Step 1: Create Order in Backend
+            const backendUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:5000`;
+            console.log("Calling backend at:", `${backendUrl}/api/create-order`);
+            
+            const payload = {
+                userId: currentUser?.uid || 'guest',
+                userEmail: currentUser?.email || 'guest@example.com',
+                items: orderItems,
                 totalAmount: cartTotal,
-                deliveryAddress: form,
-                status: 'pending',
-                timestamp: serverTimestamp(),
+                deliveryAddress: form
+            };
+            
+            console.log("Payload:", payload);
+
+            const orderResponse = await fetch(`${backendUrl}/api/create-order`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email,
+                    items: orderItems,
+                    totalAmount: cartTotal,
+                    deliveryAddress: form
+                }),
             });
 
-            // Decrement stock using transaction to ensure size arrays are updated safely
-            await runTransaction(db, async (transaction) => {
-                // First, read all the product documents to get current sizes array
-                const productRefs = cartItems.map(item => doc(db, 'products', item.id));
-                const productDocs = await Promise.all(productRefs.map(ref => transaction.get(ref)));
+            console.log("Response status:", orderResponse.status);
+            const orderData = await orderResponse.json();
+            console.log("Order Data:", orderData);
 
-                // Then, perform updates
-                cartItems.forEach((item, index) => {
-                    const productDoc = productDocs[index];
-                    if (!productDoc.exists()) return;
+            if (!orderResponse.ok) {
+                 toast.error(orderData.error || 'Could not initiate connection to backend');
+                 setLoading(false);
+                 return;
+            }
 
-                    const productData = productDoc.data();
-                    const updateData = {};
-
-                    if (item.selectedSize && productData.sizes?.length > 0) {
-                        const updatedSizes = productData.sizes.map(size => {
-                            if (size.label === item.selectedSize.label) {
-                                return { ...size, stock: Math.max(0, (size.stock || 0) - item.quantity) };
-                            }
-                            return size;
+            // Step 2: Open Razorpay Checkout Modal
+            const options = {
+                key: orderData.key_id, // Enter the Key ID generated from the Dashboard
+                amount: orderData.amount, // Amount is in currency subunits. Default currency is INR.
+                currency: 'INR',
+                name: 'Sri Amman Timbers & Paints',
+                description: 'Test Transaction',
+                order_id: orderData.razorpayOrderId,
+                handler: async function (response) {
+                    // Step 3: Verify Payment in Backend
+                    try {
+                        const verifyRes = await fetch(`${backendUrl}/api/verify-payment`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                payment_id: response.razorpay_payment_id,
+                                order_id: response.razorpay_order_id,
+                                signature: response.razorpay_signature,
+                                firebase_order_id: orderData.orderId
+                            }),
                         });
-                        updateData.sizes = updatedSizes;
-                        // Reduce total top-level stock as well for compatibility
-                        updateData.stock = Math.max(0, (productData.stock || 0) - item.quantity);
-                    } else {
-                        updateData.stock = Math.max(0, (productData.stock || 0) - item.quantity);
-                    }
 
-                    transaction.update(productRefs[index], updateData);
-                });
+                        const verifyData = await verifyRes.json();
+
+                        if (verifyRes.ok && verifyData.success) {
+                            // Payment confirmed and database updated
+                            clearCart();
+                            navigate('/order-success', {
+                                state: {
+                                    orderDetails: {
+                                        orderId: orderData.orderId,
+                                        paymentId: response.razorpay_payment_id
+                                    }
+                                }
+                            });
+                        } else {
+                            toast.error('Payment verification failed.');
+                            navigate('/order-failed');
+                        }
+                    } catch(err) {
+                        toast.error('An error occurred during verification.');
+                        navigate('/order-failed');
+                    }
+                },
+                prefill: {
+                    name: form.name,
+                    email: currentUser.email,
+                    contact: form.phone
+                },
+                theme: {
+                    color: '#0056b3'
+                },
+                modal: {
+                    ondismiss: function() {
+                        // User closed the Razorpay modal
+                        toast.error('Payment cancelled.');
+                        navigate('/order-failed');
+                    }
+                }
+            };
+
+            const rzp = new window.Razorpay(options);
+            
+            rzp.on('payment.failed', function (response){
+                 toast.error('Payment failed: ' + response.error.description);
+                 navigate('/order-failed');
             });
 
-            clearCart();
-            setSuccess(true);
-            toast.success('Order placed successfully!');
+            rzp.open();
+            
         } catch (err) {
-            console.error(err);
-            toast.error('Failed to place order. Please try again.');
+            console.error("Checkout Error:", err);
+            toast.error('Failed to initiate checkout. Please try again.');
         } finally {
             setLoading(false);
         }
     };
-
-    if (success) {
-        return (
-            <div className="page-wrapper">
-                <div className="container">
-                    <div className="order-success fade-in">
-                        <div className="success-icon">
-                            <FiCheck size={40} />
-                        </div>
-                        <h1>Order Placed!</h1>
-                        <p>Your order has been placed successfully. We'll notify you when it ships.</p>
-                        <div className="success-actions">
-                            <button className="btn btn-primary btn-lg" onClick={() => navigate('/orders')}>
-                                View My Orders
-                            </button>
-                            <button className="btn btn-secondary btn-lg" onClick={() => navigate('/')}>
-                                Continue Shopping
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="page-wrapper">
@@ -200,7 +261,7 @@ const Checkout = () => {
                                 className="btn btn-primary btn-full btn-lg"
                                 disabled={loading}
                             >
-                                {loading ? <span className="btn-spinner" /> : 'Place Order'}
+                                {loading ? <span className="btn-spinner" /> : 'Place Order & Pay'}
                             </button>
                         </form>
                     </div>

@@ -178,7 +178,7 @@ const OrderManagement = () => {
                                 <th>Customer</th>
                                 <th>Items</th>
                                 <th>Amount</th>
-                                <th>Payment</th>
+                                <th>Payment Status</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -193,7 +193,11 @@ const OrderManagement = () => {
                                     <td style={{ fontSize: '0.875rem', fontWeight: 600 }}>{order.customerName || order.userEmail}</td>
                                     <td style={{ fontSize: '0.875rem' }}>{order.items?.length || 0} items</td>
                                     <td style={{ fontWeight: 700, color: '#f4a261' }}>₹{calcTotal(order).toLocaleString()}</td>
-                                    <td style={{ fontSize: '0.8rem' }}>{order.paymentMethod || 'COD'}</td>
+                                    <td style={{ fontSize: '0.8rem' }}>
+                                        <span className={`badge badge-${order.paymentStatus === 'Paid' ? 'success' : order.paymentStatus === 'Failed' ? 'danger' : 'warning'}`}>
+                                            {order.paymentStatus || order.paymentMethod || 'Pending'}
+                                        </span>
+                                    </td>
                                     <td style={{ fontSize: '0.8rem', color: '#adb5bd' }}>{formatDate(order.timestamp)}</td>
                                     <td>
                                         <select
@@ -236,8 +240,12 @@ const OrderManagement = () => {
                                 <span className="detail-value" style={{ color: '#f4a261', fontWeight: 700 }}>₹{calcTotal(selectedOrder).toLocaleString()}</span>
                             </div>
                             <div className="detail-row">
-                                <span className="detail-label">Payment Method</span>
-                                <span className="detail-value">{selectedOrder.paymentMethod || 'COD'}</span>
+                                <span className="detail-label">Payment Status</span>
+                                <span className="detail-value">
+                                    <span className={`badge badge-${selectedOrder.paymentStatus === 'Paid' ? 'success' : selectedOrder.paymentStatus === 'Failed' ? 'danger' : 'warning'}`}>
+                                        {selectedOrder.paymentStatus || selectedOrder.paymentMethod || 'Pending'}
+                                    </span>
+                                </span>
                             </div>
                             <div className="detail-row">
                                 <span className="detail-label">Date</span>

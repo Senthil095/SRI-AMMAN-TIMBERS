@@ -15,6 +15,8 @@ import Orders from './pages/Orders';
 import PaintPreview from './pages/PaintPreview';
 import CartPage from './pages/CartPage';
 import Profile from './pages/Profile';
+import OrderSuccess from './pages/OrderSuccess';
+import OrderFailed from './pages/OrderFailed';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -70,6 +72,22 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <Orders />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/order-success"
+                    element={
+                        <ProtectedRoute>
+                            <OrderSuccess />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/order-failed"
+                    element={
+                        <ProtectedRoute>
+                            <OrderFailed />
                         </ProtectedRoute>
                     }
                 />
