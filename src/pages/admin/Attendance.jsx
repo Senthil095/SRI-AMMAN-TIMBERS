@@ -213,7 +213,7 @@ const Attendance = () => {
                                     {employeeSummaries.map((emp) => (
                                         <tr key={emp.id}>
                                             <td style={{ fontWeight: 600 }}>{emp.fullName}</td>
-                                            <td style={{ fontSize: '0.875rem', color: 'rgba(248,249,250,0.5)' }}>{emp.jobRole}</td>
+                                            <td style={{ fontSize: '0.875rem', color: '#6c757d' }}>{emp.jobRole}</td>
                                             <td style={{ color: '#00e676', fontWeight: 'bold' }}>{emp.present}</td>
                                             <td style={{ color: '#ffd166', fontWeight: 'bold' }}>{emp.late}</td>
                                             <td style={{ color: '#8b5cf6', fontWeight: 'bold' }}>{emp.halfDay}</td>
@@ -311,7 +311,7 @@ const Attendance = () => {
                                     .map((r) => (
                                         <tr key={r.id}>
                                             <td style={{ fontSize: '0.875rem' }}>{r.date}</td>
-                                            <td style={{ fontSize: '0.875rem', color: 'rgba(248,249,250,0.5)' }}>
+                                            <td style={{ fontSize: '0.875rem', color: '#6c757d' }}>
                                                 {format(new Date(r.date + 'T00:00:00'), 'EEEE')}
                                             </td>
                                             <td style={{ fontSize: '0.82rem', color: '#00e676', fontWeight: 600 }}>

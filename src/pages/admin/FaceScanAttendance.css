@@ -19,11 +19,11 @@
     align-items: center;
     gap: 6px;
     font-size: 0.8rem;
-    color: rgba(248, 249, 250, 0.6);
-    background: rgba(255, 255, 255, 0.05);
+    color: #6c757d;
+    background: #f8f9fa;
     padding: 4px 12px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid #f1f3f5;
 }
 
 .face-scan-clock {
@@ -31,7 +31,7 @@
     align-items: center;
     gap: 6px;
     font-size: 0.78rem;
-    color: rgba(248, 249, 250, 0.45);
+    color: #adb5bd;
 }
 
 .face-scan-ip-blocked {
@@ -62,7 +62,7 @@
 }
 
 .ip-blocked-content p {
-    color: rgba(255, 255, 255, 0.8);
+    color: #495057;
     font-size: 0.9rem;
     margin: 0;
     line-height: 1.5;
@@ -70,10 +70,10 @@
 
 .ip-info {
     font-size: 0.75rem !important;
-    background: rgba(0, 0, 0, 0.3);
+    background: #f1f3f5;
     padding: 4px 10px;
     border-radius: 6px;
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: #6c757d !important;
     margin-top: 6px !important;
     font-family: monospace;
 }
@@ -363,12 +363,12 @@
     margin: 0;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #f8f9fa;
+    color: #212529;
 }
 
 .face-recog-info span {
     font-size: 0.75rem;
-    color: rgba(248, 249, 250, 0.5);
+    color: #6c757d;
 }
 
 .face-recog-record {
@@ -460,19 +460,19 @@
 /* ── Help text ─────────────── */
 .face-scan-help {
     font-size: 0.76rem;
-    color: rgba(248, 249, 250, 0.35);
+    color: #6c757d;
     padding: 10px 14px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
     line-height: 1.6;
 }
 
 .face-scan-help strong {
-    color: rgba(248, 249, 250, 0.6);
+    color: #212529;
 }
 
 .face-scan-help em {
-    color: #ffd166;
+    color: #f59f00;
     font-style: normal;
 }

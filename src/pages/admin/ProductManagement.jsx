@@ -203,7 +203,7 @@ const ProductManagement = () => {
             {/* Form */}
             {showForm && (
                 <div className="admin-form-card fade-in">
-                    <h3 style={{ marginBottom: '24px', color: '#f8f9fa', fontWeight: 700 }}>
+                    <h3 style={{ marginBottom: '24px', color: '#212529', fontWeight: 700 }}>
                         {editId ? 'Edit Product' : 'Add New Product'}
                     </h3>
                     <form onSubmit={handleSubmit}>
@@ -405,8 +405,8 @@ const ProductManagement = () => {
                                                 <div style={{ width: '24px', height: '24px', borderRadius: '8px', background: p.colorHex, border: '2px solid rgba(255,255,255,0.2)', flexShrink: 0 }} />
                                             )}
                                             <div>
-                                                <p style={{ fontWeight: 600, color: '#f8f9fa', fontSize: '0.875rem' }}>{p.name}</p>
-                                                <p style={{ fontSize: '0.75rem', color: 'rgba(248,249,250,0.4)', marginTop: '2px' }}>
+                                                <p style={{ fontWeight: 600, color: '#212529', fontSize: '0.875rem' }}>{p.name}</p>
+                                                <p style={{ fontSize: '0.75rem', color: '#6c757d', marginTop: '2px' }}>
                                                     {p.description?.slice(0, 40)}...
                                                 </p>
                                             </div>

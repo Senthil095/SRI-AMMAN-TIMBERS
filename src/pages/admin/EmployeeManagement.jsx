@@ -153,8 +153,8 @@ const EmployeeManagement = () => {
             {/* Form */}
             {showForm && (
                 <div className="admin-form-card fade-in">
-                    <h3 style={{ marginBottom: '24px', color: '#f8f9fa', fontWeight: 700 }}>
-                        {editId ? 'Edit Employee' : 'Register New Employee'}
+                    <h3 style={{ marginBottom: '24px', color: '#212529', fontWeight: 700 }}>
+                        {editId ? 'Edit Employee Data' : 'Add New Employee'}
                     </h3>
                     <form onSubmit={handleSubmit}>
                         <div className="admin-form-grid">
@@ -255,10 +255,10 @@ const EmployeeManagement = () => {
                                             <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>{emp.fullName}</span>
                                         </div>
                                     </td>
-                                    <td style={{ fontSize: '0.875rem', color: 'rgba(248,249,250,0.65)' }}>{emp.phoneNumber}</td>
+                                    <td style={{ fontSize: '0.875rem', color: '#6c757d' }}>{emp.phoneNumber}</td>
                                     <td><span className="badge badge-info">{emp.jobRole}</span></td>
                                     <td style={{ fontWeight: 600, color: '#f4a261' }}>₹{emp.monthlySalary?.toLocaleString()}</td>
-                                    <td style={{ fontSize: '0.8rem', color: 'rgba(248,249,250,0.5)' }}>{emp.joiningDate}</td>
+                                    <td style={{ fontSize: '0.8rem', color: '#adb5bd' }}>{emp.joiningDate}</td>
                                     <td>
                                         <span className={`badge ${emp.employmentStatus === 'Active' ? 'badge-success' : 'badge-danger'}`}>
                                             {emp.employmentStatus}
