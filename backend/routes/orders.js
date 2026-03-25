@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { db } = require('../firebaseAdmin');
+const { sendOrderStatusEmail } = require('../utils/sendEmail');
 
 // GET /api/orders?userId=xxx — fetch orders for a specific user
 router.get('/orders', async (req, res) => {
@@ -96,9 +97,23 @@ router.put('/admin/orders/:orderId/status', async (req, res) => {
             return res.status(400).json({ error: 'status is required' });
         }
 
-        await db.collection('orders').doc(orderId).update({
+        const docRef = db.collection('orders').doc(orderId);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+        
+        const orderData = doc.data();
+
+        await docRef.update({
             status: status,
             updatedAt: new Date().toISOString(),
+        });
+
+        // Asynchronously send email notification
+        sendOrderStatusEmail(orderId, orderData.customerName, orderData.userEmail, status).catch(err => {
+            console.error('[Email Error] Failed to dispatch email thread:', err);
         });
 
         // Log activity
