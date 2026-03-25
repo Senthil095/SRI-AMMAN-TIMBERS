@@ -32,9 +32,7 @@ const NAV_SECTIONS = [
     {
         label: 'Inventory & Supply',
         items: [
-            { to: '/admin/inventory', icon: <FiBox size={18} />, label: 'Inventory' },
-            { to: '/admin/suppliers', icon: <FiTruck size={18} />, label: 'Suppliers' },
-            { to: '/admin/purchases', icon: <FiShoppingBag size={18} />, label: 'Purchases' },
+            { to: '/admin/inventory', icon: <FiBox size={18} />, label: 'Inventory' }
         ],
     },
     {
