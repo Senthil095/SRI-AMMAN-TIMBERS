@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, updateDoc, doc, query, orderBy, increment, addDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
 import AdminLayout from './AdminLayout';
 import { FiSearch, FiEye, FiX } from 'react-icons/fi';
 import toast from 'react-hot-toast';
@@ -12,9 +10,6 @@ const STATUS_BADGE = {
     'Out for Delivery': 'coral', 'Delivered': 'success', 'Cancelled': 'danger',
 };
 
-// Statuses that mean stock has been deducted
-const STOCK_DEDUCTED_STATUSES = ['Confirmed', 'Packed', 'Out for Delivery', 'Delivered'];
-
 const formatDate = (ts) => {
     if (!ts) return '—';
     try {
@@ -25,6 +20,8 @@ const formatDate = (ts) => {
     } catch { return '—'; }
 };
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:5000`;
+
 const OrderManagement = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -34,10 +31,15 @@ const OrderManagement = () => {
 
     const fetchOrders = async () => {
         try {
-            const snap = await getDocs(query(collection(db, 'orders'), orderBy('timestamp', 'desc')));
-            setOrders(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+            const res = await fetch(`${BACKEND_URL}/api/admin/orders`);
+            const data = await res.json();
+            if (res.ok && data.orders) {
+                setOrders(data.orders);
+            } else {
+                console.error('Failed to fetch orders:', data.error);
+            }
         } catch (err) {
-            console.error(err);
+            console.error('Error fetching orders:', err);
         } finally {
             setLoading(false);
         }
@@ -51,51 +53,18 @@ const OrderManagement = () => {
         const oldStatus = order.status || 'Pending';
 
         try {
-            await updateDoc(doc(db, 'orders', orderId), { status: newStatus, updatedAt: new Date().toISOString() });
+            const res = await fetch(`${BACKEND_URL}/api/admin/orders/${orderId}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus }),
+            });
+            const data = await res.json();
 
-            // Auto-reduce inventory when order moves to Confirmed (first time stock deduction)
-            const wasDeducted = STOCK_DEDUCTED_STATUSES.includes(oldStatus);
-            const shouldDeduct = STOCK_DEDUCTED_STATUSES.includes(newStatus);
-
-            if (!wasDeducted && shouldDeduct && order.items?.length > 0) {
-                // Deduct stock for each item
-                for (const item of order.items) {
-                    if (item.productId) {
-                        try {
-                            await updateDoc(doc(db, 'products', item.productId), {
-                                stock: increment(-(item.quantity || 1)),
-                                updatedAt: new Date().toISOString(),
-                            });
-                        } catch { /* product might not have stock field */ }
-                    }
-                }
-                toast.success(`Order ${newStatus} — inventory updated!`);
-            } else if (wasDeducted && !shouldDeduct && newStatus === 'Cancelled' && order.items?.length > 0) {
-                // Restore stock on cancellation
-                for (const item of order.items) {
-                    if (item.productId) {
-                        try {
-                            await updateDoc(doc(db, 'products', item.productId), {
-                                stock: increment(item.quantity || 1),
-                                updatedAt: new Date().toISOString(),
-                            });
-                        } catch { /* ignore */ }
-                    }
-                }
-                toast.success(`Order cancelled — stock restored!`);
-            } else {
+            if (res.ok && data.success) {
                 toast.success(`Order status updated to ${newStatus}`);
+            } else {
+                toast.error(data.error || 'Failed to update status');
             }
-
-            // Log activity
-            try {
-                await addDoc(collection(db, 'activityLogs'), {
-                    action: `Order #${orderId.slice(0, 8).toUpperCase()} status changed from ${oldStatus} to ${newStatus}`,
-                    module: 'Orders',
-                    user: 'Admin',
-                    createdAt: new Date().toISOString(),
-                });
-            } catch { /* logging not critical */ }
 
             fetchOrders();
         } catch {
@@ -263,6 +232,30 @@ const OrderManagement = () => {
                                 <div className="detail-row">
                                     <span className="detail-label">Address</span>
                                     <span className="detail-value" style={{ maxWidth: '60%' }}>{selectedOrder.address}</span>
+                                </div>
+                            )}
+                            {selectedOrder.deliveryAddress && (
+                                <>
+                                    <div className="detail-row">
+                                        <span className="detail-label">Delivery Name</span>
+                                        <span className="detail-value">{selectedOrder.deliveryAddress.name || '—'}</span>
+                                    </div>
+                                    <div className="detail-row">
+                                        <span className="detail-label">Phone</span>
+                                        <span className="detail-value">{selectedOrder.deliveryAddress.phone || '—'}</span>
+                                    </div>
+                                    <div className="detail-row">
+                                        <span className="detail-label">Delivery Address</span>
+                                        <span className="detail-value" style={{ maxWidth: '60%' }}>
+                                            {selectedOrder.deliveryAddress.address}, {selectedOrder.deliveryAddress.city} - {selectedOrder.deliveryAddress.pincode}
+                                        </span>
+                                    </div>
+                                </>
+                            )}
+                            {selectedOrder.razorpayPaymentId && (
+                                <div className="detail-row">
+                                    <span className="detail-label">Razorpay Payment ID</span>
+                                    <span className="detail-value" style={{ fontFamily: 'monospace', fontSize: '0.82rem' }}>{selectedOrder.razorpayPaymentId}</span>
                                 </div>
                             )}
 

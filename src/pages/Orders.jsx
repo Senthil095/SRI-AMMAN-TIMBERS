@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
-import { db } from '../firebase';
 import { useAuth } from '../context/AuthContext';
-import { FiPackage, FiClock, FiCheck, FiTruck } from 'react-icons/fi';
+import { FiPackage, FiClock, FiCheck, FiTruck, FiBox, FiXCircle, FiCheckCircle } from 'react-icons/fi';
 import './Orders.css';
 
 const STATUS_CONFIG = {
-    pending: { label: 'Pending', icon: <FiClock size={12} />, class: 'warning' },
-    shipped: { label: 'Shipped', icon: <FiTruck size={12} />, class: 'info' },
-    completed: { label: 'Completed', icon: <FiCheck size={12} />, class: 'success' },
+    'Pending': { label: 'Pending', icon: <FiClock size={12} />, class: 'warning' },
+    'Confirmed': { label: 'Confirmed', icon: <FiCheckCircle size={12} />, class: 'info' },
+    'Packed': { label: 'Packed', icon: <FiBox size={12} />, class: 'purple' },
+    'Out for Delivery': { label: 'Out for Delivery', icon: <FiTruck size={12} />, class: 'coral' },
+    'Delivered': { label: 'Delivered', icon: <FiCheck size={12} />, class: 'success' },
+    'Cancelled': { label: 'Cancelled', icon: <FiXCircle size={12} />, class: 'danger' },
+};
+
+const PAYMENT_BADGE = {
+    'Paid': 'success',
+    'Failed': 'danger',
+    'Pending': 'warning',
 };
 
 const Orders = () => {
@@ -18,16 +25,25 @@ const Orders = () => {
 
     useEffect(() => {
         const fetchOrders = async () => {
+            if (!currentUser?.uid) {
+                setLoading(false);
+                return;
+            }
+
             try {
-                const q = query(
-                    collection(db, 'orders'),
-                    where('userId', '==', currentUser.uid),
-                    orderBy('timestamp', 'desc')
-                );
-                const snap = await getDocs(q);
-                setOrders(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+                const backendUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:5000`;
+                const res = await fetch(`${backendUrl}/api/orders?userId=${currentUser.uid}`);
+                const data = await res.json();
+
+                if (res.ok && data.orders) {
+                    // Filter out failed payments
+                    const validOrders = data.orders.filter(o => o.paymentStatus !== 'Failed');
+                    setOrders(validOrders);
+                } else {
+                    console.error('Failed to fetch orders:', data.error);
+                }
             } catch (err) {
-                console.error(err);
+                console.error('Error fetching orders:', err);
             } finally {
                 setLoading(false);
             }
@@ -37,7 +53,7 @@ const Orders = () => {
 
     const formatDate = (ts) => {
         if (!ts) return 'Just now';
-        const date = ts.toDate ? ts.toDate() : new Date(ts);
+        const date = new Date(ts);
         return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
     };
 
@@ -62,7 +78,8 @@ const Orders = () => {
                 ) : (
                     <div className="orders-list fade-in">
                         {orders.map((order) => {
-                            const status = STATUS_CONFIG[order.status] || STATUS_CONFIG.pending;
+                            const status = STATUS_CONFIG[order.status] || STATUS_CONFIG['Pending'];
+                            const paymentBadge = PAYMENT_BADGE[order.paymentStatus] || 'warning';
                             return (
                                 <div key={order.id} className="order-card">
                                     <div className="order-card-header">
@@ -74,6 +91,9 @@ const Orders = () => {
                                             </div>
                                         </div>
                                         <div className="order-header-right">
+                                            <span className={`badge badge-${paymentBadge}`}>
+                                                {order.paymentStatus || 'Pending'}
+                                            </span>
                                             <span className={`badge badge-${status.class}`}>
                                                 {status.icon} {status.label}
                                             </span>
@@ -106,7 +126,17 @@ const Orders = () => {
                                         <div className="order-delivery">
                                             <span className="delivery-label">Delivery to:</span>
                                             <span className="delivery-addr">
+                                                {order.deliveryAddress.name && `${order.deliveryAddress.name}, `}
                                                 {order.deliveryAddress.address}, {order.deliveryAddress.city} - {order.deliveryAddress.pincode}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {order.razorpayPaymentId && (
+                                        <div className="order-delivery" style={{ borderTop: 'none', paddingTop: 0 }}>
+                                            <span className="delivery-label">Payment ID:</span>
+                                            <span className="delivery-addr" style={{ fontFamily: 'monospace', fontSize: '0.78rem' }}>
+                                                {order.razorpayPaymentId}
                                             </span>
                                         </div>
                                     )}

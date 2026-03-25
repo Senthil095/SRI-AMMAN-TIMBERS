@@ -36,9 +36,12 @@ router.post('/create-order', async (req, res) => {
             const orderRef = await db.collection('orders').add({
                 userId: userId || 'guest',
                 userEmail: userEmail || '',
+                customerName: deliveryAddress?.name || '',
+                customerPhone: deliveryAddress?.phone || '',
                 items: items,
                 totalAmount: totalAmount,
                 deliveryAddress: deliveryAddress || {},
+                status: 'Pending',
                 paymentStatus: 'Pending',
                 orderStatus: 'Initiated',
                 razorpayOrderId: razorpayOrder.id,

@@ -19,6 +19,7 @@ router.post('/verify-payment', async (req, res) => {
             // Signature mismatch, update DB status to Failed
              if (db && firebase_order_id) {
                 await db.collection('orders').doc(firebase_order_id).update({
+                    status: 'Cancelled',
                     paymentStatus: 'Failed',
                     razorpayPaymentId: payment_id
                 });
@@ -67,6 +68,7 @@ router.post('/verify-payment', async (req, res) => {
                       
                       // Also update the order status
                       transaction.update(db.collection('orders').doc(firebase_order_id), {
+                          status: 'Confirmed',
                           paymentStatus: 'Paid',
                           orderStatus: 'Placed',
                           razorpayPaymentId: payment_id,
@@ -77,6 +79,7 @@ router.post('/verify-payment', async (req, res) => {
             } else {
                // Order document doesn't exist, just try to update
                await db.collection('orders').doc(firebase_order_id).update({
+                    status: 'Confirmed',
                     paymentStatus: 'Paid',
                     orderStatus: 'Placed',
                     razorpayPaymentId: payment_id,

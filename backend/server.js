@@ -14,10 +14,12 @@ app.use(express.json());
 // Import Routes
 const createOrderRoute = require('./routes/createOrder');
 const verifyPaymentRoute = require('./routes/verifyPayment');
+const ordersRoute = require('./routes/orders');
 
 // Use Routes
 app.use('/api', createOrderRoute);
 app.use('/api', verifyPaymentRoute);
+app.use('/api', ordersRoute);
 
 // Basic health check endpoint
 app.get('/api/health', (req, res) => {
