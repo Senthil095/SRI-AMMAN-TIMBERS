@@ -17,6 +17,7 @@ import CartPage from './pages/CartPage';
 import Profile from './pages/Profile';
 import OrderSuccess from './pages/OrderSuccess';
 import OrderFailed from './pages/OrderFailed';
+import OrderTracking from './pages/OrderTracking';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -72,6 +73,14 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <Orders />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/order/:orderId"
+                    element={
+                        <ProtectedRoute>
+                            <OrderTracking />
                         </ProtectedRoute>
                     }
                 />

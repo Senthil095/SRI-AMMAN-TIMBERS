@@ -1,0 +1,485 @@
+/* ── Order Tracking Page ─────────────────────── */
+.tracking-header {
+    padding: 32px 0 24px;
+}
+
+.tracking-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.2s ease;
+    margin-bottom: 16px;
+}
+
+.tracking-back-link:hover {
+    color: #ff6b6b;
+}
+
+.tracking-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.tracking-order-id {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #adb5bd;
+    margin-top: 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+.tracking-refresh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1.5px solid #e9ecef;
+    background: white;
+    color: #6c757d;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.tracking-refresh-btn:hover {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    background: #fff0f0;
+}
+
+/* ── Progress Card ─────────────────────── */
+.tracking-progress-card {
+    background: white;
+    border: 1.5px solid #f1f3f5;
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.tracking-status-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tracking-current-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #212529;
+    font-family: 'Inter', sans-serif;
+}
+
+.tracking-current-status.cancelled {
+    color: #dc2626;
+}
+
+.tracking-placed-date {
+    font-size: 0.82rem;
+    color: #adb5bd;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Step Timeline ──────────────────────── */
+.tracking-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    position: relative;
+}
+
+.tracking-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.step-icon-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.step-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f3f5;
+    color: #adb5bd;
+    border: 2.5px solid #e9ecef;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+    flex-shrink: 0;
+}
+
+.tracking-step.completed .step-icon {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border-color: #22c55e;
+    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+}
+
+.tracking-step.current .step-icon {
+    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    color: white;
+    border-color: #ff6b6b;
+    box-shadow: 0 4px 14px rgba(255, 107, 107, 0.35);
+    animation: pulse-icon 2s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+    0%, 100% { box-shadow: 0 4px 14px rgba(255, 107, 107, 0.35); }
+    50% { box-shadow: 0 4px 24px rgba(255, 107, 107, 0.55), 0 0 0 8px rgba(255, 107, 107, 0.1); }
+}
+
+/* Connecting line */
+.step-line {
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 28px);
+    width: calc(100% - 56px);
+    height: 3px;
+    background: #e9ecef;
+    transform: translateY(-50%);
+    z-index: 1;
+    border-radius: 2px;
+    transition: background 0.5s ease;
+}
+
+.step-line.filled {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.step-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.step-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #adb5bd;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.tracking-step.completed .step-label,
+.tracking-step.current .step-label {
+    color: #212529;
+}
+
+.step-desc {
+    font-size: 0.72rem;
+    color: #ced4da;
+    font-family: 'Inter', sans-serif;
+    max-width: 120px;
+    margin: 0 auto;
+}
+
+.tracking-step.completed .step-desc {
+    color: #6c757d;
+}
+
+.tracking-step.current .step-desc {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+/* ── Cancelled State ────────────────────── */
+.tracking-cancelled-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px;
+    color: #dc2626;
+    text-align: center;
+}
+
+.tracking-cancelled-msg p {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Details Grid ───────────────────────── */
+.tracking-details-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.tracking-detail-card {
+    background: white;
+    border: 1.5px solid #f1f3f5;
+    border-radius: 20px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.tracking-detail-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #212529;
+    font-family: 'Inter', sans-serif;
+    margin: 0 0 16px;
+}
+
+/* Items */
+.tracking-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.tracking-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.tracking-item:last-child {
+    border-bottom: none;
+}
+
+.tracking-item-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.tracking-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tracking-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tracking-item-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #212529;
+    font-family: 'Inter', sans-serif;
+}
+
+.tracking-item-qty {
+    font-size: 0.78rem;
+    color: #adb5bd;
+    font-family: 'Inter', sans-serif;
+}
+
+.tracking-item-price {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #495057;
+    font-family: 'Inter', sans-serif;
+}
+
+.tracking-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 2px solid #f1f3f5;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #212529;
+    font-family: 'Inter', sans-serif;
+}
+
+.tracking-total-value {
+    font-size: 1.1rem;
+    color: #ff6b6b;
+    font-weight: 800;
+}
+
+/* Address */
+.tracking-address {
+    margin-bottom: 16px;
+}
+
+.addr-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #212529;
+    margin: 0 0 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+.addr-line {
+    font-size: 0.84rem;
+    color: #6c757d;
+    margin: 0 0 3px;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+}
+
+.addr-phone {
+    font-size: 0.82rem;
+    color: #495057;
+    margin: 8px 0 0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Payment */
+.tracking-payment {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.84rem;
+    font-family: 'Inter', sans-serif;
+    color: #6c757d;
+}
+
+.payment-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #495057;
+    background: #f8f9fa;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+/* Auto-refresh notice */
+.tracking-auto-refresh {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: #ced4da;
+    padding: 12px 0 40px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Responsive ─────────────────────────── */
+@media (max-width: 768px) {
+    .tracking-steps {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .tracking-step {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        gap: 16px;
+    }
+
+    .step-icon-wrapper {
+        flex-direction: column;
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    .step-line {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 3px;
+        height: 32px;
+        transform: none;
+        margin: 4px auto;
+    }
+
+    .step-info {
+        align-items: flex-start;
+    }
+
+    .step-desc {
+        max-width: none;
+        margin: 0;
+    }
+
+    .tracking-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tracking-progress-card {
+        padding: 20px;
+    }
+}
+
+/* ── Order card clickable styles ──────── */
+.order-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.order-track-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 24px;
+    background: linear-gradient(90deg, #fafbfc, #fff0f0);
+    border-top: 1px solid #f1f3f5;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ff6b6b;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.order-track-link:hover {
+    background: linear-gradient(90deg, #fff0f0, #ffe0e0);
+    color: #e85555;
+}

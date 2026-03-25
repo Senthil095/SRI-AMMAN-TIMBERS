@@ -39,6 +39,30 @@ router.get('/orders', async (req, res) => {
     }
 });
 
+// GET /api/orders/:orderId — fetch a single order by ID
+router.get('/orders/:orderId', async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const doc = await db.collection('orders').doc(orderId).get();
+
+        if (!doc.exists) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        const data = doc.data();
+        const order = {
+            id: doc.id,
+            ...data,
+            timestamp: data.timestamp ? data.timestamp.toDate().toISOString() : null,
+        };
+
+        res.json({ order });
+    } catch (error) {
+        console.error('Error fetching order:', error);
+        res.status(500).json({ error: 'Failed to fetch order', details: error.message });
+    }
+});
+
 // GET /api/admin/orders — fetch ALL orders for admin
 router.get('/admin/orders', async (req, res) => {
     try {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FiPackage, FiClock, FiCheck, FiTruck, FiBox, FiXCircle, FiCheckCircle } from 'react-icons/fi';
+import { FiPackage, FiClock, FiCheck, FiTruck, FiBox, FiXCircle, FiCheckCircle, FiChevronRight } from 'react-icons/fi';
 import './Orders.css';
 
 const STATUS_CONFIG = {
@@ -81,7 +82,8 @@ const Orders = () => {
                             const status = STATUS_CONFIG[order.status] || STATUS_CONFIG['Pending'];
                             const paymentBadge = PAYMENT_BADGE[order.paymentStatus] || 'warning';
                             return (
-                                <div key={order.id} className="order-card">
+                                <Link to={`/order/${order.id}`} key={order.id} className="order-card-link">
+                                <div className="order-card">
                                     <div className="order-card-header">
                                         <div className="order-id-section">
                                             <FiPackage size={16} className="text-accent" />
@@ -140,7 +142,12 @@ const Orders = () => {
                                             </span>
                                         </div>
                                     )}
+
+                                    <div className="order-track-link">
+                                        Track Order <FiChevronRight size={14} />
+                                    </div>
                                 </div>
+                                </Link>
                             );
                         })}
                     </div>
