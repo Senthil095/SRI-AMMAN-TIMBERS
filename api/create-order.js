@@ -1,27 +1,26 @@
-import Razorpay from 'razorpay';
-import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
+const Razorpay = require('razorpay');
+const admin = require('firebase-admin');
 
-// Initialize Firebase Admin
-const firebaseConfig = {
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-};
-
-if (!getApps().length) {
+// Initialize Firebase Admin SDK if not already done
+if (!admin.apps.length) {
   try {
-    initializeApp({
-      credential: cert(firebaseConfig),
+    const serviceAccount = {
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    };
+
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
     });
   } catch (err) {
-    console.error('Firebase initialization error:', err);
+    console.error('Firebase initialization error:', err.message);
   }
 }
 
-const db = getFirestore();
+const db = admin.firestore();
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -51,17 +50,17 @@ export default async function handler(req, res) {
     // Amount should be in paise
     const amountInPaise = Math.round(totalAmount * 100);
 
-    // 1. Create order in Razorpay
+    // Create order in Razorpay
     const options = {
       amount: amountInPaise,
       currency: 'INR',
       receipt: `receipt_${Date.now()}`,
-      payment_capture: 1, // Auto capture
+      payment_capture: 1,
     };
 
     const razorpayOrder = await razorpay.orders.create(options);
 
-    // 2. Save "Pending" order to Firestore
+    // Save "Pending" order to Firestore
     let orderId = `temp_${Date.now()}`;
     try {
       const orderRef = await db.collection('orders').add({
@@ -83,7 +82,6 @@ export default async function handler(req, res) {
       console.warn('Firestore error:', dbErr.message);
     }
 
-    // 3. Return response to frontend
     res.status(200).json({
       razorpayOrderId: razorpayOrder.id,
       amount: razorpayOrder.amount,
@@ -97,4 +95,4 @@ export default async function handler(req, res) {
       details: error.message,
     });
   }
-}
+};

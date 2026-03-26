@@ -1,26 +1,25 @@
-import crypto from 'crypto';
-import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
-import nodemailer from 'nodemailer';
+const crypto = require('crypto');
+const admin = require('firebase-admin');
+const nodemailer = require('nodemailer');
 
-// Initialize Firebase Admin
-const firebaseConfig = {
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-};
-
-if (!getApps().length) {
+// Initialize Firebase Admin SDK if not already done
+if (!admin.apps.length) {
   try {
-    initializeApp({
-      credential: cert(firebaseConfig),
+    const serviceAccount = {
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    };
+
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
     });
   } catch (err) {
-    console.error('Firebase initialization error:', err);
+    console.error('Firebase initialization error:', err.message);
   }
 }
 
-const db = getFirestore();
+const db = admin.firestore();
 
 // Email setup
 const transporter = nodemailer.createTransport({
@@ -48,7 +47,7 @@ async function sendOrderStatusEmail(orderId, customerName, customerEmail, status
   }
 }
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -175,4 +174,4 @@ export default async function handler(req, res) {
       details: error.message,
     });
   }
-}
+};
