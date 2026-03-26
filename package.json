@@ -7,7 +7,9 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "start": "vite preview --host",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
     "date-fns": "^3.2.0",
