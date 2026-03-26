@@ -1,52 +1,60 @@
+/* ── Order Success Page — Premium v2.0 ─────────────────────── */
 .order-success-page {
     padding: 60px 0;
     min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--background-secondary, #f8f9fa);
+    background: linear-gradient(165deg, #FAFAF8 0%, #E6FAF7 60%, #F0EBFF 100%);
 }
 
 .order-success-card {
     background: white;
-    border-radius: 12px;
-    padding: 40px;
-    max-width: 500px;
+    border-radius: 28px;
+    padding: 48px 44px;
+    max-width: 520px;
     width: 100%;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.03);
+    border: 1px solid #EEEEEB;
+    animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .success-icon-wrapper {
-    color: #28a745;
+    color: #10B981;
     margin-bottom: 24px;
 }
 
 .success-title {
-    font-size: 1.8rem;
-    color: #333;
+    font-size: 2rem;
+    color: #1A1A18;
     margin-bottom: 12px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
 }
 
 .success-message {
-    color: #666;
-    margin-bottom: 30px;
-    font-size: 1.1rem;
+    color: #6B6B66;
+    margin-bottom: 32px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .order-details-box {
-    background: #f8f9fa;
-    border: 1px dashed #dee2e6;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
+    background: #FAFAF8;
+    border: 1px dashed #E2E2DE;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 32px;
     text-align: left;
 }
 
 .detail-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .detail-row:last-child {
@@ -54,23 +62,25 @@
 }
 
 .detail-label {
-    color: #6c757d;
+    color: #6B6B66;
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .detail-value {
-    color: #333;
+    color: #1A1A18;
     font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .font-mono {
-    font-family: monospace;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .success-actions {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 14px;
 }
 
 .btn-icon {
@@ -81,5 +91,12 @@
     .success-actions {
         flex-direction: row;
         justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-success-card {
+        padding: 36px 24px;
+        border-radius: 24px;
     }
 }

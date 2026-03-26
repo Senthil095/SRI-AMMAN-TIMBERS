@@ -1,6 +1,6 @@
-/* ── Order Tracking Page ─────────────────────── */
+/* ── Order Tracking Page — Premium v2.0 ────────────────────── */
 .tracking-header {
-    padding: 32px 0 24px;
+    padding: 36px 0 28px;
 }
 
 .tracking-back-link {
@@ -8,16 +8,16 @@
     align-items: center;
     gap: 6px;
     font-size: 0.85rem;
-    color: #6c757d;
+    color: #6B6B66;
     text-decoration: none;
     font-weight: 500;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     transition: color 0.2s ease;
     margin-bottom: 16px;
 }
 
 .tracking-back-link:hover {
-    color: #ff6b6b;
+    color: #E8634A;
 }
 
 .tracking-title-row {
@@ -33,48 +33,49 @@
     align-items: center;
     gap: 6px;
     font-size: 0.85rem;
-    color: #adb5bd;
+    color: #B5B5B0;
     margin-top: 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .tracking-refresh-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 16px;
-    border-radius: 10px;
-    border: 1.5px solid #e9ecef;
+    padding: 9px 18px;
+    border-radius: 12px;
+    border: 1.5px solid #E2E2DE;
     background: white;
-    color: #6c757d;
+    color: #6B6B66;
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.2s ease;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    transition: all 0.25s ease;
 }
 
 .tracking-refresh-btn:hover {
-    border-color: #ff6b6b;
-    color: #ff6b6b;
-    background: #fff0f0;
+    border-color: #E8634A;
+    color: #E8634A;
+    background: #FFF0EC;
+    transform: translateY(-1px);
 }
 
-/* ── Progress Card ─────────────────────── */
+/* ── Progress Card ──────────────────────── */
 .tracking-progress-card {
     background: white;
-    border: 1.5px solid #f1f3f5;
-    border-radius: 20px;
+    border: 1px solid #EEEEEB;
+    border-radius: 24px;
     padding: 28px 32px;
-    margin-bottom: 24px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    margin-bottom: 28px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
 }
 
 .tracking-status-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 32px;
+    margin-bottom: 36px;
     flex-wrap: wrap;
     gap: 12px;
 }
@@ -83,20 +84,20 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .tracking-current-status.cancelled {
-    color: #dc2626;
+    color: #DC2626;
 }
 
 .tracking-placed-date {
     font-size: 0.82rem;
-    color: #adb5bd;
-    font-family: 'Inter', sans-serif;
+    color: #B5B5B0;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 /* ── Step Timeline ──────────────────────── */
@@ -122,42 +123,42 @@
     width: 100%;
     position: relative;
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .step-icon {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f1f3f5;
-    color: #adb5bd;
-    border: 2.5px solid #e9ecef;
+    background: #EEEEEB;
+    color: #B5B5B0;
+    border: 2.5px solid #E2E2DE;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 2;
     flex-shrink: 0;
 }
 
 .tracking-step.completed .step-icon {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
+    background: linear-gradient(135deg, #10B981, #059669);
     color: white;
-    border-color: #22c55e;
-    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+    border-color: #10B981;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.25);
 }
 
 .tracking-step.current .step-icon {
-    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    background: linear-gradient(135deg, #E8634A, #D14D36);
     color: white;
-    border-color: #ff6b6b;
-    box-shadow: 0 4px 14px rgba(255, 107, 107, 0.35);
+    border-color: #E8634A;
+    box-shadow: 0 6px 18px rgba(232, 99, 74, 0.30);
     animation: pulse-icon 2s ease-in-out infinite;
 }
 
 @keyframes pulse-icon {
-    0%, 100% { box-shadow: 0 4px 14px rgba(255, 107, 107, 0.35); }
-    50% { box-shadow: 0 4px 24px rgba(255, 107, 107, 0.55), 0 0 0 8px rgba(255, 107, 107, 0.1); }
+    0%, 100% { box-shadow: 0 6px 18px rgba(232, 99, 74, 0.30); }
+    50% { box-shadow: 0 6px 28px rgba(232, 99, 74, 0.50), 0 0 0 8px rgba(232, 99, 74, 0.08); }
 }
 
 /* Connecting line */
@@ -167,7 +168,7 @@
     left: calc(50% + 28px);
     width: calc(100% - 56px);
     height: 3px;
-    background: #e9ecef;
+    background: #E2E2DE;
     transform: translateY(-50%);
     z-index: 1;
     border-radius: 2px;
@@ -175,7 +176,7 @@
 }
 
 .step-line.filled {
-    background: linear-gradient(90deg, #22c55e, #16a34a);
+    background: linear-gradient(90deg, #10B981, #059669);
 }
 
 .step-info {
@@ -187,30 +188,30 @@
 .step-label {
     font-size: 0.82rem;
     font-weight: 700;
-    color: #adb5bd;
-    font-family: 'Inter', sans-serif;
+    color: #B5B5B0;
+    font-family: 'Outfit', 'Inter', sans-serif;
     transition: color 0.3s ease;
 }
 
 .tracking-step.completed .step-label,
 .tracking-step.current .step-label {
-    color: #212529;
+    color: #1A1A18;
 }
 
 .step-desc {
     font-size: 0.72rem;
-    color: #ced4da;
-    font-family: 'Inter', sans-serif;
+    color: #D1D1CC;
+    font-family: 'Outfit', 'Inter', sans-serif;
     max-width: 120px;
     margin: 0 auto;
 }
 
 .tracking-step.completed .step-desc {
-    color: #6c757d;
+    color: #6B6B66;
 }
 
 .tracking-step.current .step-desc {
-    color: #ff6b6b;
+    color: #E8634A;
     font-weight: 600;
 }
 
@@ -220,16 +221,16 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    padding: 32px;
-    color: #dc2626;
+    padding: 36px;
+    color: #DC2626;
     text-align: center;
 }
 
 .tracking-cancelled-msg p {
     font-size: 0.95rem;
-    color: #6c757d;
+    color: #6B6B66;
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 /* ── Details Grid ───────────────────────── */
@@ -237,26 +238,26 @@
     display: grid;
     grid-template-columns: 1.4fr 1fr;
     gap: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
 .tracking-detail-card {
     background: white;
-    border: 1.5px solid #f1f3f5;
-    border-radius: 20px;
+    border: 1px solid #EEEEEB;
+    border-radius: 24px;
     padding: 24px 28px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .tracking-detail-title {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     font-weight: 700;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
-    margin: 0 0 16px;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    margin: 0 0 18px;
 }
 
 /* Items */
@@ -272,7 +273,7 @@
     align-items: center;
     gap: 12px;
     padding: 8px 0;
-    border-bottom: 1px solid #f8f9fa;
+    border-bottom: 1px solid #F7F7F5;
 }
 
 .tracking-item:last-child {
@@ -280,11 +281,11 @@
 }
 
 .tracking-item-img {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
     overflow: hidden;
-    background: #f1f3f5;
+    background: #EEEEEB;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -306,40 +307,40 @@
 }
 
 .tracking-item-name {
-    font-size: 0.875rem;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .tracking-item-qty {
     font-size: 0.78rem;
-    color: #adb5bd;
-    font-family: 'Inter', sans-serif;
+    color: #B5B5B0;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .tracking-item-price {
-    font-size: 0.875rem;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: #495057;
-    font-family: 'Inter', sans-serif;
+    color: #4A4A46;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .tracking-total-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 14px;
-    border-top: 2px solid #f1f3f5;
+    padding-top: 16px;
+    border-top: 2px solid #EEEEEB;
     font-size: 0.95rem;
     font-weight: 700;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .tracking-total-value {
-    font-size: 1.1rem;
-    color: #ff6b6b;
+    font-size: 1.15rem;
+    color: #E8634A;
     font-weight: 800;
 }
 
@@ -349,26 +350,26 @@
 }
 
 .addr-name {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     font-weight: 700;
-    color: #212529;
+    color: #1A1A18;
     margin: 0 0 6px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .addr-line {
-    font-size: 0.84rem;
-    color: #6c757d;
+    font-size: 0.85rem;
+    color: #6B6B66;
     margin: 0 0 3px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     line-height: 1.5;
 }
 
 .addr-phone {
     font-size: 0.82rem;
-    color: #495057;
+    color: #4A4A46;
     margin: 8px 0 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 /* Payment */
@@ -382,18 +383,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.84rem;
-    font-family: 'Inter', sans-serif;
-    color: #6c757d;
+    font-size: 0.85rem;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    color: #6B6B66;
 }
 
 .payment-id {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.78rem;
-    color: #495057;
-    background: #f8f9fa;
-    padding: 2px 8px;
-    border-radius: 6px;
+    color: #4A4A46;
+    background: #F7F7F5;
+    padding: 3px 10px;
+    border-radius: 8px;
 }
 
 /* Auto-refresh notice */
@@ -403,9 +404,9 @@
     gap: 6px;
     justify-content: center;
     font-size: 0.75rem;
-    color: #ced4da;
-    padding: 12px 0 40px;
-    font-family: 'Inter', sans-serif;
+    color: #D1D1CC;
+    padding: 14px 0 40px;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 /* ── Responsive ─────────────────────────── */
@@ -468,18 +469,18 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 10px 24px;
-    background: linear-gradient(90deg, #fafbfc, #fff0f0);
-    border-top: 1px solid #f1f3f5;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #FAFAF8, #FFF0EC);
+    border-top: 1px solid #EEEEEB;
     font-size: 0.82rem;
     font-weight: 600;
-    color: #ff6b6b;
-    font-family: 'Inter', sans-serif;
+    color: #E8634A;
+    font-family: 'Outfit', 'Inter', sans-serif;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .order-track-link:hover {
-    background: linear-gradient(90deg, #fff0f0, #ffe0e0);
-    color: #e85555;
+    background: linear-gradient(90deg, #FFF0EC, #FFE4DD);
+    color: #D14D36;
 }

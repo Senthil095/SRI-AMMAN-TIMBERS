@@ -1,16 +1,16 @@
-/* ── Paint Preview Page ────────────────────────────────────── */
+﻿/* â”€â”€ Paint Preview Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .pp-page {
     min-height: 100vh;
-    background: linear-gradient(160deg, #ffffff 0%, #fff8f5 50%, #f0fffe 100%);
+    background: linear-gradient(160deg, #ffffff 0%, #FFF0EC 50%, #E6FAF7 100%);
     padding-top: 68px;
     padding-bottom: 60px;
 }
 
-/* ── Header ────────────────────────────────────────────────── */
+/* â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-header {
     background: white;
-    border-bottom: 1px solid #f1f3f5;
+    border-bottom: 1px solid #EEEEEB;
     padding: 24px 0;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
@@ -26,15 +26,15 @@
 .pp-title {
     font-size: 1.8rem;
     font-weight: 900;
-    color: #212529;
+    color: #1A1A18;
     letter-spacing: -0.02em;
 }
 
 .pp-subtitle {
     font-size: 0.9rem;
-    color: #6c757d;
+    color: #6B6B66;
     margin-top: 4px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 /* Steps */
@@ -60,21 +60,21 @@
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: #f1f3f5;
-    border: 2px solid #dee2e6;
+    background: #EEEEEB;
+    border: 2px solid #E2E2DE;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.72rem;
     font-weight: 700;
-    color: #6c757d;
-    font-family: 'Inter', sans-serif;
+    color: #6B6B66;
+    font-family: 'Outfit', 'Inter', sans-serif;
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
 
 .pp-step.active .pp-step-dot {
-    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    background: linear-gradient(135deg, #E8634A, #D14D36);
     border-color: transparent;
     color: white;
     box-shadow: 0 4px 12px rgba(255, 107, 107, 0.35);
@@ -87,25 +87,25 @@
 .pp-step-label {
     font-size: 0.78rem;
     font-weight: 600;
-    color: #495057;
-    font-family: 'Inter', sans-serif;
+    color: #4A4A46;
+    font-family: 'Outfit', 'Inter', sans-serif;
     white-space: nowrap;
 }
 
 .pp-step-line {
     width: 32px;
     height: 2px;
-    background: #dee2e6;
+    background: #E2E2DE;
     margin: 0 4px;
     border-radius: 1px;
 }
 
 .pp-step.active+.pp-step .pp-step-line,
 .pp-step.active .pp-step-line {
-    background: linear-gradient(90deg, #ff6b6b, #dee2e6);
+    background: linear-gradient(90deg, #E8634A, #E2E2DE);
 }
 
-/* ── Layout ────────────────────────────────────────────────── */
+/* â”€â”€ Layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-layout {
     display: grid;
     grid-template-columns: 320px 1fr;
@@ -114,10 +114,10 @@
     align-items: start;
 }
 
-/* ── Cards ─────────────────────────────────────────────────── */
+/* â”€â”€ Cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-card {
     background: white;
-    border: 1.5px solid #f1f3f5;
+    border: 1.5px solid #EEEEEB;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -137,25 +137,25 @@
     gap: 8px;
     font-size: 0.9rem;
     font-weight: 700;
-    color: #212529;
+    color: #1A1A18;
     margin-bottom: 16px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
-/* ── Upload ────────────────────────────────────────────────── */
+/* â”€â”€ Upload â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-upload-area {
-    border: 2px dashed #dee2e6;
+    border: 2px dashed #E2E2DE;
     border-radius: 14px;
     padding: 24px 16px;
     text-align: center;
     cursor: pointer;
     transition: all 0.25s ease;
-    background: #fafbfc;
+    background: #FAFAF8;
 }
 
 .pp-upload-area:hover {
-    border-color: #ff6b6b;
-    background: #fff0f0;
+    border-color: #E8634A;
+    background: #FFF0EC;
 }
 
 .pp-upload-icon {
@@ -166,23 +166,23 @@
 .pp-upload-text {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #495057;
-    font-family: 'Inter', sans-serif;
+    color: #4A4A46;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-upload-hint {
     font-size: 0.75rem;
-    color: #adb5bd;
+    color: #B5B5B0;
     margin-top: 4px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
-/* ── Tabs ──────────────────────────────────────────────────── */
+/* â”€â”€ Tabs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-tabs {
     display: flex;
     gap: 4px;
     margin-bottom: 14px;
-    background: #f8f9fa;
+    background: #F7F7F5;
     border-radius: 10px;
     padding: 4px;
 }
@@ -193,21 +193,21 @@
     border-radius: 8px;
     font-size: 0.78rem;
     font-weight: 600;
-    color: #6c757d;
+    color: #6B6B66;
     background: transparent;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-tab.active {
     background: white;
-    color: #ff6b6b;
+    color: #E8634A;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* ── Color Grid ────────────────────────────────────────────── */
+/* â”€â”€ Color Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-color-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -235,12 +235,12 @@
 
 .pp-color-swatch.selected {
     border-color: white;
-    box-shadow: 0 0 0 3px #ff6b6b, 0 6px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 0 3px #E8634A, 0 6px 16px rgba(0, 0, 0, 0.2);
     transform: scale(1.15);
     animation: elasticPop 0.3s ease;
 }
 
-/* ── Custom Color ──────────────────────────────────────────── */
+/* â”€â”€ Custom Color â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-custom-color {
     display: flex;
     flex-direction: column;
@@ -290,24 +290,24 @@
     padding: 8px 16px;
     border-radius: 8px;
     font-weight: 700;
-    color: #495057;
+    color: #4A4A46;
     font-size: 1.1rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     backdrop-filter: blur(4px);
 }
 
-/* ── Hover Preview ─────────────────────────────────────────── */
+/* â”€â”€ Hover Preview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-hover-preview {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 8px 12px;
-    background: #f8f9fa;
+    background: #F7F7F5;
     border-radius: 10px;
     margin-bottom: 10px;
     font-size: 0.8rem;
-    color: #495057;
-    font-family: 'Inter', sans-serif;
+    color: #4A4A46;
+    font-family: 'Outfit', 'Inter', sans-serif;
     animation: fadeIn 0.15s ease;
 }
 
@@ -319,14 +319,14 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* ── Selected Color ────────────────────────────────────────── */
+/* â”€â”€ Selected Color â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-selected-color {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    background: #fafbfc;
-    border: 1.5px solid #f1f3f5;
+    background: #FAFAF8;
+    border: 1.5px solid #EEEEEB;
     border-radius: 12px;
 }
 
@@ -341,14 +341,14 @@
 .pp-selected-name {
     font-size: 0.82rem;
     font-weight: 700;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-selected-hex {
     font-size: 0.72rem;
-    color: #adb5bd;
-    font-family: 'Inter', sans-serif;
+    color: #B5B5B0;
+    font-family: 'Outfit', 'Inter', sans-serif;
     margin-top: 1px;
 }
 
@@ -357,9 +357,9 @@
     width: 30px;
     height: 30px;
     border-radius: 8px;
-    background: #f8f9fa;
-    border: 1.5px solid #dee2e6;
-    color: #adb5bd;
+    background: #F7F7F5;
+    border: 1.5px solid #E2E2DE;
+    color: #B5B5B0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -372,14 +372,14 @@
 .pp-fav-btn.active {
     background: #fee2e2;
     border-color: #fecaca;
-    color: #ff6b6b;
+    color: #E8634A;
 }
 
 .pp-fav-btn.active {
-    color: #ff6b6b;
+    color: #E8634A;
 }
 
-/* ── Sliders ───────────────────────────────────────────────── */
+/* â”€â”€ Sliders â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-sliders {
     display: flex;
     flex-direction: column;
@@ -401,22 +401,22 @@
 .pp-slider-header label {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #495057;
-    font-family: 'Inter', sans-serif;
+    color: #4A4A46;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-slider-header span {
     font-size: 0.78rem;
-    color: #ff6b6b;
+    color: #E8634A;
     font-weight: 700;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-slider {
     width: 100%;
     height: 5px;
     border-radius: 3px;
-    background: #e9ecef;
+    background: #E2E2DE;
     outline: none;
     cursor: pointer;
     -webkit-appearance: none;
@@ -428,7 +428,7 @@
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    background: linear-gradient(135deg, #E8634A, #D14D36);
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
     transition: transform 0.15s ease;
@@ -438,7 +438,7 @@
     transform: scale(1.2);
 }
 
-/* ── History ───────────────────────────────────────────────── */
+/* â”€â”€ History â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-history {
     display: flex;
     flex-direction: column;
@@ -454,12 +454,12 @@
     cursor: pointer;
     transition: background 0.15s ease;
     font-size: 0.8rem;
-    color: #495057;
-    font-family: 'Inter', sans-serif;
+    color: #4A4A46;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-history-item:hover {
-    background: #f8f9fa;
+    background: #F7F7F5;
 }
 
 .pp-history-dot {
@@ -470,14 +470,14 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-/* ── Toolbar ───────────────────────────────────────────────── */
+/* â”€â”€ Toolbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
     background: white;
-    border: 1.5px solid #f1f3f5;
+    border: 1.5px solid #EEEEEB;
     border-radius: 14px;
     margin-bottom: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -496,43 +496,43 @@
     gap: 6px;
     padding: 7px 12px;
     border-radius: 9px;
-    background: #f8f9fa;
-    border: 1.5px solid #dee2e6;
-    color: #495057;
+    background: #F7F7F5;
+    border: 1.5px solid #E2E2DE;
+    color: #4A4A46;
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-tool-btn:hover {
-    background: #fff0f0;
+    background: #FFF0EC;
     border-color: rgba(255, 107, 107, 0.3);
-    color: #ff6b6b;
+    color: #E8634A;
     transform: translateY(1px) scale(0.96);
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.12), inset 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .pp-tool-btn.active {
-    background: #fff0f0;
-    border-color: #ff6b6b;
-    color: #ff6b6b;
+    background: #FFF0EC;
+    border-color: #E8634A;
+    color: #E8634A;
 }
 
 .pp-zoom-label {
     font-size: 0.78rem;
-    color: #6c757d;
+    color: #6B6B66;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     min-width: 40px;
 }
 
-/* ── Canvas ────────────────────────────────────────────────── */
+/* â”€â”€ Canvas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-canvas-wrapper {
     position: relative;
-    background: #f8f9fa;
-    border: 1.5px solid #f1f3f5;
+    background: #F7F7F5;
+    border: 1.5px solid #EEEEEB;
     border-radius: 20px;
     overflow: hidden;
     min-height: 400px;
@@ -576,20 +576,20 @@
 .pp-spinner {
     width: 36px;
     height: 36px;
-    border: 3px solid #f1f3f5;
-    border-top-color: #ff6b6b;
+    border: 3px solid #EEEEEB;
+    border-top-color: #E8634A;
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
 }
 
 .pp-processing span {
     font-size: 0.875rem;
-    color: #6c757d;
-    font-family: 'Inter', sans-serif;
+    color: #6B6B66;
+    font-family: 'Outfit', 'Inter', sans-serif;
     font-weight: 600;
 }
 
-/* ── Compare Overlay ───────────────────────────────────────── */
+/* â”€â”€ Compare Overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-compare-overlay {
     position: absolute;
     inset: 0;
@@ -657,7 +657,7 @@
     border-radius: 12px;
     font-size: 0.72rem;
     font-weight: 700;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     backdrop-filter: blur(4px);
     pointer-events: none;
 }
@@ -670,7 +670,7 @@
     right: 12px;
 }
 
-/* ── Action Buttons ────────────────────────────────────────── */
+/* â”€â”€ Action Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-actions {
     display: flex;
     gap: 10px;
@@ -689,7 +689,7 @@
     border: none;
     cursor: pointer;
     transition: all 0.25s ease;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     position: relative;
     overflow: hidden;
     white-space: nowrap;
@@ -708,7 +708,7 @@
 }
 
 .pp-btn-primary {
-    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    background: linear-gradient(135deg, #E8634A, #D14D36);
     color: white;
     box-shadow: 0 4px 16px rgba(255, 107, 107, 0.35);
 }
@@ -719,7 +719,7 @@
 }
 
 .pp-btn-secondary {
-    background: linear-gradient(135deg, #2ec4b6, #1aab9e);
+    background: linear-gradient(135deg, #1AB5A5, #0E9A8C);
     color: white;
     box-shadow: 0 4px 14px rgba(46, 196, 182, 0.3);
 }
@@ -742,14 +742,14 @@
 
 .pp-btn-ghost {
     background: white;
-    color: #6c757d;
-    border: 1.5px solid #dee2e6;
+    color: #6B6B66;
+    border: 1.5px solid #E2E2DE;
 }
 
 .pp-btn-ghost:hover {
-    background: #f8f9fa;
-    color: #212529;
-    border-color: #adb5bd;
+    background: #F7F7F5;
+    color: #1A1A18;
+    border-color: #B5B5B0;
 }
 
 .pp-btn-full {
@@ -764,7 +764,7 @@
     box-shadow: none !important;
 }
 
-/* ── Quick Colors ──────────────────────────────────────────── */
+/* â”€â”€ Quick Colors â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-quick-colors {
     display: flex;
     align-items: center;
@@ -775,9 +775,9 @@
 
 .pp-quick-label {
     font-size: 0.78rem;
-    color: #adb5bd;
+    color: #B5B5B0;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     flex-shrink: 0;
 }
 
@@ -798,11 +798,11 @@
 
 .pp-quick-dot.selected {
     border-color: white;
-    box-shadow: 0 0 0 3px #ff6b6b;
+    box-shadow: 0 0 0 3px #E8634A;
     transform: scale(1.15);
 }
 
-/* ── Responsive ────────────────────────────────────────────── */
+/* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media (max-width: 1024px) {
     .pp-layout {
         grid-template-columns: 280px 1fr;
@@ -838,7 +838,7 @@
     }
 }
 
-/* ── Contact Shop (Custom Order Tab) ──────────────────────── */
+/* â”€â”€ Contact Shop (Custom Order Tab) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-contact-shop {
     display: flex;
     flex-direction: column;
@@ -858,15 +858,15 @@
 .pp-contact-title {
     font-size: 1rem;
     font-weight: 800;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
     margin: 0;
 }
 
 .pp-contact-desc {
     font-size: 0.8rem;
-    color: #6c757d;
-    font-family: 'Inter', sans-serif;
+    color: #6B6B66;
+    font-family: 'Outfit', 'Inter', sans-serif;
     line-height: 1.5;
     max-width: 240px;
     margin: 0 auto;
@@ -879,21 +879,21 @@
 
 .pp-contact-note {
     font-size: 0.72rem;
-    color: #adb5bd;
-    font-family: 'Inter', sans-serif;
+    color: #B5B5B0;
+    font-family: 'Outfit', 'Inter', sans-serif;
     line-height: 1.5;
     margin-top: 8px;
-    background: #f8f9fa;
+    background: #F7F7F5;
     padding: 8px 12px;
     border-radius: 10px;
-    border: 1px solid #f1f3f5;
+    border: 1px solid #EEEEEB;
 }
 
-/* ── Buy This Color Panel ──────────────────────────────────── */
+/* â”€â”€ Buy This Color Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .pp-buy-panel {
     margin-top: 20px;
     background: white;
-    border: 1.5px solid #f1f3f5;
+    border: 1.5px solid #EEEEEB;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
@@ -906,7 +906,7 @@
     gap: 14px;
     margin-bottom: 18px;
     padding-bottom: 14px;
-    border-bottom: 1.5px solid #f1f3f5;
+    border-bottom: 1.5px solid #EEEEEB;
 }
 
 .pp-buy-color-chip {
@@ -920,15 +920,15 @@
 .pp-buy-title {
     font-size: 1.05rem;
     font-weight: 800;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
     margin: 0 0 2px;
 }
 
 .pp-buy-subtitle {
     font-size: 0.78rem;
-    color: #6c757d;
-    font-family: 'Inter', sans-serif;
+    color: #6B6B66;
+    font-family: 'Outfit', 'Inter', sans-serif;
     margin: 0;
 }
 
@@ -938,15 +938,15 @@
     justify-content: center;
     gap: 12px;
     padding: 24px;
-    color: #6c757d;
+    color: #6B6B66;
     font-size: 0.875rem;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-buy-empty {
     text-align: center;
     padding: 24px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-buy-empty span {
@@ -955,12 +955,12 @@
 
 .pp-buy-empty p {
     font-size: 0.85rem;
-    color: #6c757d;
+    color: #6B6B66;
     margin-top: 8px;
 }
 
 .pp-buy-empty a {
-    color: #ff6b6b;
+    color: #E8634A;
     text-decoration: none;
     font-weight: 600;
 }
@@ -973,11 +973,11 @@
 }
 
 .pp-buy-card {
-    border: 1.5px solid #f1f3f5;
+    border: 1.5px solid #EEEEEB;
     border-radius: 14px;
     overflow: hidden;
     transition: all 0.2s ease;
-    background: #fafbfc;
+    background: #FAFAF8;
 }
 
 .pp-buy-card:hover {
@@ -989,7 +989,7 @@
 .pp-buy-img-wrap {
     height: 120px;
     overflow: hidden;
-    background: #f1f3f5;
+    background: #EEEEEB;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1014,15 +1014,15 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #2ec4b6;
-    font-family: 'Inter', sans-serif;
+    color: #1AB5A5;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-buy-name {
     font-size: 0.82rem;
     font-weight: 700;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
     margin: 3px 0 4px;
     white-space: nowrap;
     overflow: hidden;
@@ -1032,8 +1032,8 @@
 .pp-buy-price {
     font-size: 0.88rem;
     font-weight: 800;
-    color: #ff6b6b;
-    font-family: 'Inter', sans-serif;
+    color: #E8634A;
+    font-family: 'Outfit', 'Inter', sans-serif;
     margin: 0 0 8px;
 }
 
@@ -1050,23 +1050,23 @@
     border-radius: 6px;
     font-size: 0.68rem;
     font-weight: 600;
-    background: #f1f3f5;
-    border: 1.5px solid #dee2e6;
-    color: #495057;
+    background: #EEEEEB;
+    border: 1.5px solid #E2E2DE;
+    color: #4A4A46;
     cursor: pointer;
     transition: all 0.15s ease;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .pp-buy-size-pill.active {
-    background: #fff0f0;
-    border-color: #ff6b6b;
-    color: #ff6b6b;
+    background: #FFF0EC;
+    border-color: #E8634A;
+    color: #E8634A;
 }
 
 .pp-buy-size-pill:hover:not(.active) {
-    border-color: #adb5bd;
-    background: #f8f9fa;
+    border-color: #B5B5B0;
+    background: #F7F7F5;
 }
 
 /* Footer: stock + add button */
@@ -1080,14 +1080,14 @@
 .pp-buy-stock {
     font-size: 0.68rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     padding: 3px 8px;
     border-radius: 20px;
 }
 
 .pp-buy-stock.in {
     background: #dcfce7;
-    color: #16a34a;
+    color: #10B981;
 }
 
 .pp-buy-stock.low {
@@ -1108,12 +1108,12 @@
     border-radius: 9px;
     font-size: 0.75rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #ff6b6b, #e85555);
+    background: linear-gradient(135deg, #E8634A, #D14D36);
     color: white;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
     box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
     white-space: nowrap;
 }
@@ -1124,13 +1124,13 @@
 }
 
 .pp-buy-add-btn.added {
-    background: linear-gradient(135deg, #16a34a, #15803d);
+    background: linear-gradient(135deg, #10B981, #059669);
     box-shadow: 0 3px 10px rgba(22, 163, 74, 0.3);
 }
 
 .pp-buy-add-btn:disabled {
-    background: #dee2e6;
-    color: #adb5bd;
+    background: #E2E2DE;
+    color: #B5B5B0;
     box-shadow: none;
     cursor: not-allowed;
     transform: none;

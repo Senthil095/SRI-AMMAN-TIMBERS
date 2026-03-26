@@ -1,48 +1,35 @@
+/* ── Orders Page — Premium v2.0 ────────────────────────────── */
 .orders-header {
     text-align: center;
-    padding: 40px 0 48px;
+    padding: 44px 0 52px;
 }
 
 .orders-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
     padding-bottom: 80px;
 }
 
 .order-card {
     background: white;
-    border: 1.5px solid #f1f3f5;
-    border-radius: 20px;
+    border: 1px solid #EEEEEB;
+    border-radius: 24px;
     overflow: hidden;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     animation: fadeIn 0.5s ease both;
 }
 
-.orders-list .order-card:nth-child(1) {
-    animation-delay: 0.05s;
-}
-
-.orders-list .order-card:nth-child(2) {
-    animation-delay: 0.10s;
-}
-
-.orders-list .order-card:nth-child(3) {
-    animation-delay: 0.15s;
-}
-
-.orders-list .order-card:nth-child(4) {
-    animation-delay: 0.20s;
-}
-
-.orders-list .order-card:nth-child(5) {
-    animation-delay: 0.25s;
-}
+.orders-list .order-card:nth-child(1) { animation-delay: 0.05s; }
+.orders-list .order-card:nth-child(2) { animation-delay: 0.10s; }
+.orders-list .order-card:nth-child(3) { animation-delay: 0.15s; }
+.orders-list .order-card:nth-child(4) { animation-delay: 0.20s; }
+.orders-list .order-card:nth-child(5) { animation-delay: 0.25s; }
 
 .order-card:hover {
-    border-color: rgba(255, 107, 107, 0.2);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(255, 107, 107, 0.08);
+    border-color: rgba(232, 99, 74, 0.15);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(232, 99, 74, 0.06);
     transform: translateY(-3px);
 }
 
@@ -50,11 +37,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 24px;
-    border-bottom: 1px solid #f8f9fa;
+    padding: 20px 24px;
+    border-bottom: 1px solid #F7F7F5;
     flex-wrap: wrap;
     gap: 12px;
-    background: #fafbfc;
+    background: #FAFAF8;
 }
 
 .order-id-section {
@@ -64,17 +51,17 @@
 }
 
 .order-id {
-    font-size: 0.875rem;
+    font-size: 0.88rem;
     font-weight: 700;
-    color: #212529;
-    font-family: 'Inter', sans-serif;
+    color: #1A1A18;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .order-date {
     font-size: 0.78rem;
-    color: #adb5bd;
+    color: #B5B5B0;
     margin-top: 2px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .order-header-right {
@@ -84,14 +71,14 @@
 }
 
 .order-total {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 800;
-    color: #ff6b6b;
-    font-family: 'Inter', sans-serif;
+    color: #E8634A;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .order-items-list {
-    padding: 16px 24px;
+    padding: 18px 24px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -104,11 +91,11 @@
 }
 
 .order-line-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
     overflow: hidden;
-    background: #f1f3f5;
+    background: #EEEEEB;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,33 +117,33 @@
 }
 
 .order-line-name {
-    font-size: 0.875rem;
-    color: #212529;
+    font-size: 0.88rem;
+    color: #1A1A18;
     font-weight: 500;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .order-line-qty {
     font-size: 0.78rem;
-    color: #adb5bd;
-    font-family: 'Inter', sans-serif;
+    color: #B5B5B0;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .order-line-price {
-    font-size: 0.875rem;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: #6c757d;
-    font-family: 'Inter', sans-serif;
+    color: #6B6B66;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .order-delivery {
-    padding: 12px 24px;
-    border-top: 1px solid #f8f9fa;
+    padding: 14px 24px;
+    border-top: 1px solid #F7F7F5;
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.8rem;
-    background: linear-gradient(90deg, #fafbfc, #fff8f5);
+    font-size: 0.82rem;
+    background: linear-gradient(90deg, #FAFAF8, #FFF0EC);
     position: relative;
 }
 
@@ -167,22 +154,22 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    background: linear-gradient(180deg, #ff6b6b, #ffd166);
+    background: linear-gradient(180deg, #E8634A, #F5C842);
     border-radius: 0 2px 2px 0;
 }
 
 .delivery-label {
-    color: #adb5bd;
+    color: #B5B5B0;
     font-weight: 600;
     flex-shrink: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .delivery-addr {
-    color: #6c757d;
-    font-family: 'Inter', sans-serif;
+    color: #6B6B66;
+    font-family: 'Outfit', 'Inter', sans-serif;
 }
 
 .text-accent {
-    color: #ff6b6b;
+    color: #E8634A;
 }
