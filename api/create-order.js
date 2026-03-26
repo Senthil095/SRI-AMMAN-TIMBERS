@@ -1,24 +1,4 @@
 const Razorpay = require('razorpay');
-const admin = require('firebase-admin');
-
-// Initialize Firebase Admin SDK if not already done
-if (!admin.apps.length) {
-  try {
-    const serviceAccount = {
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    };
-
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-    });
-  } catch (err) {
-    console.error('Firebase initialization error:', err.message);
-  }
-}
-
-const db = admin.firestore();
 
 module.exports = async (req, res) => {
   // Enable CORS
@@ -60,27 +40,8 @@ module.exports = async (req, res) => {
 
     const razorpayOrder = await razorpay.orders.create(options);
 
-    // Save "Pending" order to Firestore
-    let orderId = `temp_${Date.now()}`;
-    try {
-      const orderRef = await db.collection('orders').add({
-        userId: userId || 'guest',
-        userEmail: userEmail || '',
-        customerName: deliveryAddress?.name || '',
-        customerPhone: deliveryAddress?.phone || '',
-        items: items,
-        totalAmount: totalAmount,
-        deliveryAddress: deliveryAddress || {},
-        status: 'Pending',
-        paymentStatus: 'Pending',
-        orderStatus: 'Initiated',
-        razorpayOrderId: razorpayOrder.id,
-        timestamp: new Date().toISOString(),
-      });
-      orderId = orderRef.id;
-    } catch (dbErr) {
-      console.warn('Firestore error:', dbErr.message);
-    }
+    // For now, return without Firebase (will add async later)
+    const orderId = `order_${Date.now()}`;
 
     res.status(200).json({
       razorpayOrderId: razorpayOrder.id,
