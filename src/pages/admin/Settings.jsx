@@ -8,7 +8,7 @@ import './Admin.css';
 
 const DEFAULT_SETTINGS = {
     shop: { name: 'Sri Amman Paints', address: '', phone: '', email: '' },
-    business: { taxPercent: 18, currency: 'INR', deliveryCharges: 0, workingHours: '9:00 AM - 7:00 PM' },
+    business: { currency: 'INR', deliveryCharges: 0, workingHours: '9:00 AM - 7:00 PM' },
     system: { enableNotifications: true, enableDarkMode: false },
 };
 
@@ -109,11 +109,6 @@ const Settings = () => {
                 <div className="settings-section">
                     <h3><FiShoppingBag size={16} /> Business Settings</h3>
                     <div className="admin-form-grid">
-                        <div className="form-group">
-                            <label className="form-label">Tax Percentage (%)</label>
-                            <input type="number" className="form-input" value={settings.business.taxPercent}
-                                onChange={(e) => updateBusiness('taxPercent', parseFloat(e.target.value) || 0)} min="0" max="100" />
-                        </div>
                         <div className="form-group">
                             <label className="form-label">Currency</label>
                             <select className="form-select" value={settings.business.currency}

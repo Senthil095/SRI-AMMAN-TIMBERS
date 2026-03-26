@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { FiShoppingBag, FiMapPin, FiPhone } from 'react-icons/fi';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 import toast from 'react-hot-toast';
 import './Checkout.css';
 
@@ -21,16 +23,32 @@ const loadRazorpayScript = () => {
     });
 };
 
-const SHIPPING_COST = 79;
-
 const Checkout = () => {
     const { currentUser } = useAuth();
     const { cartItems, cartTotal, clearCart } = useCart();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [deliveryCharges, setDeliveryCharges] = useState(0);
+
+    // Fetch delivery charges from settings
+    useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const snap = await getDoc(doc(db, 'settings', 'appSettings'));
+                if (snap.exists()) {
+                    const charges = snap.data().business?.deliveryCharges || 0;
+                    setDeliveryCharges(charges);
+                }
+            } catch (err) {
+                console.error('Failed to fetch delivery charges:', err);
+                setDeliveryCharges(0);
+            }
+        };
+        fetchSettings();
+    }, []);
 
     const subtotal = cartTotal;
-    const shipping = SHIPPING_COST;
+    const shipping = deliveryCharges;
     const finalTotal = Math.round(subtotal + shipping);
     const [form, setForm] = useState({
         name: '',
