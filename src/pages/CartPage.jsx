@@ -10,8 +10,6 @@ import './CartPage.css';
 
 
 
-const TAX_RATE = 0.18; // 18% GST
-const FREE_SHIPPING_THRESHOLD = 999;
 const SHIPPING_COST = 79;
 
 const CartPage = () => {
@@ -25,9 +23,8 @@ const CartPage = () => {
 
     // Calculations
     const subtotal = cartTotal;
-    const tax = subtotal * TAX_RATE;
-    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-    const total = subtotal + tax + shipping;
+    const shipping = SHIPPING_COST;
+    const total = subtotal + shipping;
     const savings = cartItems.reduce((sum, item) => {
         if (item.discountPrice && item.price) {
             return sum + (item.price - item.discountPrice) * item.quantity;
@@ -237,8 +234,8 @@ const CartPage = () => {
                             <div className="trust-badge">
                                 <FiTruck size={18} className="trust-icon" />
                                 <div>
-                                    <div className="trust-title">Free Delivery</div>
-                                    <div className="trust-desc">On orders above ₹999</div>
+                                    <div className="trust-title">Fast Delivery</div>
+                                    <div className="trust-desc">Across all locations</div>
                                 </div>
                             </div>
                             <div className="trust-badge">
@@ -276,26 +273,13 @@ const CartPage = () => {
                                         </div>
                                     )}
                                     <div className="cart-summary-row">
-                                        <span>GST (18%)</span>
-                                        <span>₹{Math.round(tax).toLocaleString()}</span>
-                                    </div>
-                                    <div className="cart-summary-row">
                                         <span>Shipping</span>
-                                        <span className={shipping === 0 ? 'free-shipping' : ''}>
-                                            {shipping === 0 ? 'FREE' : `₹${shipping}`}
-                                        </span>
+                                        <span>₹{shipping}</span>
                                     </div>
-                                    {shipping > 0 && (
-                                        <div className="cart-summary-free-hint">
-                                            Add ₹{(FREE_SHIPPING_THRESHOLD - subtotal).toLocaleString()} more for free shipping
-                                        </div>
-                                    )}
-                                    <div className="cart-summary-divider" />
                                     <div className="cart-summary-row total">
                                         <span>Total</span>
                                         <span>₹{Math.round(total).toLocaleString()}</span>
                                     </div>
-                                    <div className="cart-summary-tax-note">Inclusive of all taxes</div>
                                 </div>
 
                                 {/* Checkout Button */}

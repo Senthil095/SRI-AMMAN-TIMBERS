@@ -39,7 +39,7 @@ const SalaryManagement = () => {
                 const [empSnap, salSnap, attSnap] = await Promise.all([
                     getDocs(query(collection(db, 'employees'), orderBy('fullName'))),
                     getDocs(query(collection(db, 'salaryHistory'), orderBy('paymentDate', 'desc'))),
-                    getDocs(collection(db, 'attendance')),
+                    getDocs(collection(db, 'attendanceRecords')),
                 ]);
                 const emps = empSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
                 setEmployees(emps);
@@ -85,13 +85,14 @@ const SalaryManagement = () => {
             return d.getMonth() === monthIndex && d.getFullYear() === year;
         });
 
-        const presentDays = monthRecords.filter(a => a.status === 'Present' || a.status === 'Late').length;
-        const lateDays = monthRecords.filter(a => a.status === 'Late').length;
-        const absentDays = WORKING_DAYS_PER_MONTH - presentDays;
+        const presentDays = monthRecords.filter(a => a.attendanceStatus === 'Present' || a.attendanceStatus === 'Late').length;
+        const lateDays = monthRecords.filter(a => a.attendanceStatus === 'Late').length;
+        const halfDays = monthRecords.filter(a => a.attendanceStatus === 'Half Day').length;
+        const absentDays = WORKING_DAYS_PER_MONTH - presentDays - halfDays;
 
         // Formula: (Base Salary / Working Days) * Present Days + Overtime - Deductions - Late Penalties
         const perDay = baseSalary / WORKING_DAYS_PER_MONTH;
-        const earnedSalary = Math.round(perDay * presentDays);
+        const earnedSalary = Math.round((perDay * presentDays) + (perDay * 0.5 * halfDays));
         const latePenalty = lateDays * LATE_PENALTY_PER_DAY;
         const overtime = parseFloat(form.overtime) || 0;
         const deductions = parseFloat(form.deductions) || 0;
@@ -102,6 +103,7 @@ const SalaryManagement = () => {
             presentDays,
             absentDays,
             lateDays,
+            halfDays,
             earnedSalary,
             latePenalty,
             overtime,
@@ -127,6 +129,7 @@ const SalaryManagement = () => {
                 presentDays: calculatedSalary.presentDays,
                 absentDays: calculatedSalary.absentDays,
                 lateDays: calculatedSalary.lateDays,
+                halfDays: calculatedSalary.halfDays || 0,
                 earnedSalary: calculatedSalary.earnedSalary,
                 latePenalty: calculatedSalary.latePenalty,
                 overtime: calculatedSalary.overtime,
@@ -231,18 +234,22 @@ const SalaryManagement = () => {
                                 <h4 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '12px', color: '#212529', fontFamily: 'Inter, sans-serif' }}>
                                     Salary Breakdown
                                 </h4>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '12px' }}>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginBottom: '12px' }}>
                                     <div style={{ textAlign: 'center' }}>
                                         <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#16a34a' }}>{calculatedSalary.presentDays}</div>
                                         <div style={{ fontSize: '0.7rem', color: '#6c757d' }}>Present Days</div>
                                     </div>
                                     <div style={{ textAlign: 'center' }}>
-                                        <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#dc2626' }}>{calculatedSalary.absentDays}</div>
-                                        <div style={{ fontSize: '0.7rem', color: '#6c757d' }}>Absent Days</div>
+                                        <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#8b5cf6' }}>{calculatedSalary.halfDays}</div>
+                                        <div style={{ fontSize: '0.7rem', color: '#6c757d' }}>Half Days</div>
                                     </div>
                                     <div style={{ textAlign: 'center' }}>
                                         <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#f59e0b' }}>{calculatedSalary.lateDays}</div>
                                         <div style={{ fontSize: '0.7rem', color: '#6c757d' }}>Late Days</div>
+                                    </div>
+                                    <div style={{ textAlign: 'center' }}>
+                                        <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#dc2626' }}>{calculatedSalary.absentDays}</div>
+                                        <div style={{ fontSize: '0.7rem', color: '#6c757d' }}>Absent Days</div>
                                     </div>
                                 </div>
                                 <div style={{ fontSize: '0.82rem', color: '#495057', fontFamily: 'Inter, sans-serif' }}>
@@ -251,7 +258,7 @@ const SalaryManagement = () => {
                                         <span>₹{calculatedSalary.baseSalary.toLocaleString()}</span>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0' }}>
-                                        <span>Earned ({calculatedSalary.presentDays}/{WORKING_DAYS_PER_MONTH} days)</span>
+                                        <span>Earned ({calculatedSalary.presentDays} Full + {calculatedSalary.halfDays} Half /{WORKING_DAYS_PER_MONTH} days)</span>
                                         <span>₹{calculatedSalary.earnedSalary.toLocaleString()}</span>
                                     </div>
                                     {calculatedSalary.overtime > 0 && (
@@ -318,8 +325,9 @@ const SalaryManagement = () => {
                                 <th>Employee</th>
                                 <th>Month</th>
                                 <th>Present</th>
-                                <th>Absent</th>
+                                <th>Half</th>
                                 <th>Late</th>
+                                <th>Absent</th>
                                 <th>Amount Paid</th>
                                 <th>Payment Date</th>
                             </tr>
@@ -335,8 +343,9 @@ const SalaryManagement = () => {
                                     </td>
                                     <td style={{ fontSize: '0.875rem' }}>{r.salaryMonth}</td>
                                     <td style={{ fontSize: '0.85rem', color: '#16a34a', fontWeight: 600 }}>{r.presentDays ?? '—'}</td>
-                                    <td style={{ fontSize: '0.85rem', color: '#dc2626', fontWeight: 600 }}>{r.absentDays ?? '—'}</td>
+                                    <td style={{ fontSize: '0.85rem', color: '#8b5cf6', fontWeight: 600 }}>{r.halfDays ?? '—'}</td>
                                     <td style={{ fontSize: '0.85rem', color: '#f59e0b', fontWeight: 600 }}>{r.lateDays ?? '—'}</td>
+                                    <td style={{ fontSize: '0.85rem', color: '#dc2626', fontWeight: 600 }}>{r.absentDays ?? '—'}</td>
                                     <td style={{ fontWeight: 700, color: '#4ade80', fontSize: '1rem' }}>
                                         ₹{r.amountPaid?.toLocaleString()}
                                     </td>

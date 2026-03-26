@@ -21,8 +21,6 @@ const loadRazorpayScript = () => {
     });
 };
 
-const TAX_RATE = 0.18; // 18% GST
-const FREE_SHIPPING_THRESHOLD = 999;
 const SHIPPING_COST = 79;
 
 const Checkout = () => {
@@ -32,9 +30,8 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false);
 
     const subtotal = cartTotal;
-    const tax = subtotal * TAX_RATE;
-    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-    const finalTotal = Math.round(subtotal + tax + shipping);
+    const shipping = SHIPPING_COST;
+    const finalTotal = Math.round(subtotal + shipping);
     const [form, setForm] = useState({
         name: '',
         phone: '',
@@ -311,10 +308,6 @@ const Checkout = () => {
                             <div className="total-row">
                                 <span>Subtotal</span>
                                 <span>₹{subtotal.toLocaleString()}</span>
-                            </div>
-                            <div className="total-row">
-                                <span>GST (18%)</span>
-                                <span>₹{Math.round(tax).toLocaleString()}</span>
                             </div>
                             <div className="total-row">
                                 <span>Shipping</span>

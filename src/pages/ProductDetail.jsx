@@ -9,7 +9,7 @@ import PaintCalculator from '../components/PaintCalculator';
 import './ProductDetail.css';
 
 const TRUST_BADGES = [
-    { icon: <FiTruck size={20} />, title: 'Free Delivery', desc: 'On orders above ₹999', color: '#2ec4b6' },
+    { icon: <FiTruck size={20} />, title: 'Fast Delivery', desc: 'Across all locations', color: '#2ec4b6' },
     { icon: <FiShield size={20} />, title: 'Genuine Product', desc: '100% Authentic', color: '#ff6b6b' },
     { icon: <FiAward size={20} />, title: 'Best Quality', desc: 'Premium Grade', color: '#9b5de5' },
     { icon: <FiPackage size={20} />, title: 'Secure Packing', desc: 'Safe delivery', color: '#ffd166' },

@@ -40,7 +40,7 @@ const BillingManagement = () => {
         o.id.toLowerCase().includes(search.toLowerCase())
     );
 
-    const TAX_RATE = 0.18; // 18% GST
+
 
     return (
         <AdminLayout title="Billing & Invoices" subtitle="Generate and manage invoices">
@@ -123,12 +123,8 @@ const BillingManagement = () => {
                                     <span>Subtotal</span>
                                     <span>₹{(selectedOrder.totalAmount || 0).toLocaleString()}</span>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: '0.85rem', fontFamily: 'Inter, sans-serif', color: '#495057', borderBottom: '1px solid #f1f3f5' }}>
-                                    <span>Tax (18% GST)</span>
-                                    <span>₹{Math.round((selectedOrder.totalAmount || 0) * TAX_RATE).toLocaleString()}</span>
-                                </div>
                                 <div className="invoice-total" style={{ paddingTop: '12px' }}>
-                                    Grand Total: ₹{Math.round((selectedOrder.totalAmount || 0) * (1 + TAX_RATE)).toLocaleString()}
+                                    Grand Total: ₹{Math.round((selectedOrder.totalAmount || 0)).toLocaleString()}
                                 </div>
                             </div>
                         </div>
@@ -159,7 +155,6 @@ const BillingManagement = () => {
                                         <th>Customer</th>
                                         <th>Items</th>
                                         <th>Amount</th>
-                                        <th>Tax</th>
                                         <th>Total</th>
                                         <th>Date</th>
                                         <th>Actions</th>
@@ -167,8 +162,6 @@ const BillingManagement = () => {
                                 </thead>
                                 <tbody>
                                     {filtered.map((order) => {
-                                        const tax = Math.round((order.totalAmount || 0) * TAX_RATE);
-                                        const total = (order.totalAmount || 0) + tax;
                                         return (
                                             <tr key={order.id}>
                                                 <td style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#adb5bd' }}>
@@ -177,8 +170,7 @@ const BillingManagement = () => {
                                                 <td style={{ fontWeight: 600, fontSize: '0.875rem' }}>{order.customerName || order.userEmail}</td>
                                                 <td>{order.items?.length || 0}</td>
                                                 <td style={{ fontSize: '0.85rem' }}>₹{(order.totalAmount || 0).toLocaleString()}</td>
-                                                <td style={{ fontSize: '0.85rem', color: '#6c757d' }}>₹{tax.toLocaleString()}</td>
-                                                <td style={{ fontWeight: 700, color: '#f4a261' }}>₹{total.toLocaleString()}</td>
+                                                <td style={{ fontWeight: 700, color: '#f4a261' }}>₹{(order.totalAmount || 0).toLocaleString()}</td>
                                                 <td style={{ fontSize: '0.8rem', color: '#adb5bd' }}>{formatDate(order.timestamp)}</td>
                                                 <td>
                                                     <button className="btn btn-ghost btn-sm" onClick={() => setSelectedOrder(order)} title="View Invoice">
