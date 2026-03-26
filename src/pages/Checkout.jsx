@@ -94,8 +94,8 @@ const Checkout = () => {
             }));
 
             // Step 1: Create Order in Backend
-            const apiUrl = '/api/create-order';
-            console.log("Calling API at:", apiUrl);
+            const backendUrl = import.meta.env.VITE_BACKEND_URL || `http://${window.location.hostname}:5000`;
+            console.log("Calling backend at:", `${backendUrl}/api/create-order`);
             
             const payload = {
                 userId: currentUser?.uid || 'guest',
@@ -107,7 +107,7 @@ const Checkout = () => {
             
             console.log("Payload:", payload);
 
-            const orderResponse = await fetch(apiUrl, {
+            const orderResponse = await fetch(`${backendUrl}/api/create-order`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -140,7 +140,7 @@ const Checkout = () => {
                 handler: async function (response) {
                     // Step 3: Verify Payment in Backend
                     try {
-                        const verifyRes = await fetch('/api/verify-payment', {
+                        const verifyRes = await fetch(`${backendUrl}/api/verify-payment`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({

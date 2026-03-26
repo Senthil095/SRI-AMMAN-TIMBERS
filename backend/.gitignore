@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+serviceAccountKey.json
+*.log
+*.log.*
+.DS_Store
+*.pem
+*.key
+build/
+dist/
