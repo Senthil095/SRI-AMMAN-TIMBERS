@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 const { db } = require('../firebaseAdmin');
+const { sendOrderStatusEmail } = require('../utils/sendEmail');
 
 router.post('/verify-payment', async (req, res) => {
     try {
@@ -75,6 +76,10 @@ router.post('/verify-payment', async (req, res) => {
                           razorpaySignature: signature
                       });
                  });
+                 
+                 // Send email notification upon successful order creation (Async)
+                 sendOrderStatusEmail(firebase_order_id, orderData.customerName, orderData.userEmail, 'Confirmed')
+                     .catch(emailErr => console.error("Failed to send order confirmation email:", emailErr));
                  
             } else {
                // Order document doesn't exist, just try to update

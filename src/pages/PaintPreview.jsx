@@ -600,7 +600,7 @@ const PaintPreview = () => {
                                         <p style={{ margin: 0, color: '#495057', fontSize: '1rem', lineHeight: '1.5' }}>
                                             <strong>Love this custom color?</strong><br/>
                                             We can mix it perfectly for you in any finish!<br/>
-                                            <a href="tel:+919999999999" className="pp-btn" style={{ textDecoration: 'none', display: 'inline-block', marginTop: '12px', padding: '10px 24px', background: '#ff6b6b', color: 'white', borderRadius: '8px', fontWeight: 'bold' }}>Call to Order</a>
+                                            <a href="tel:+919443257532" className="pp-btn" style={{ textDecoration: 'none', display: 'inline-block', marginTop: '12px', padding: '10px 24px', background: '#ff6b6b', color: 'white', borderRadius: '8px', fontWeight: 'bold', fontSize: '1.1rem' }}>📞 +91 9443257532</a>
                                         </p>
                                     </div>
                                 ) : (

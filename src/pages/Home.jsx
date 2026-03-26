@@ -11,7 +11,7 @@ const CATEGORIES = ['All', 'Interior', 'Exterior', 'Primer', 'Enamel', 'Texture'
 
 const WHY_CHOOSE = [
     { icon: <FiAward size={24} />, title: 'Premium Quality', desc: 'All paints are certified and tested for durability, coverage, and finish quality.', color: '#ff6b6b', bg: '#fff0f0' },
-    { icon: <FiTruck size={24} />, title: 'Fast Delivery', desc: 'Same-day delivery available in select areas. Free shipping on orders above ₹999.', color: '#2ec4b6', bg: '#e8faf9' },
+    { icon: <FiTruck size={24} />, title: 'Fast Delivery', desc: 'Same-day delivery available in select areas.', color: '#2ec4b6', bg: '#e8faf9' },
     { icon: <FiShield size={24} />, title: 'Genuine Products', desc: '100% authentic paints directly sourced from top manufacturers.', color: '#4cc9f0', bg: '#eaf8ff' },
     { icon: <FiPhone size={24} />, title: 'Expert Support', desc: 'Our color consultants are available 7 days a week to help you choose the right shade.', color: '#9b5de5', bg: '#f5eeff' },
 ];
@@ -153,8 +153,8 @@ const Home = () => {
                             </div>
                             <div className="hero-stat-divider" />
                             <div className="hero-stat">
-                                <span className="hero-stat-num">Free</span>
-                                <span className="hero-stat-label">Delivery ₹999+</span>
+                                <span className="hero-stat-num">Fast</span>
+                                <span className="hero-stat-label">Delivery</span>
                             </div>
                         </div>
                     </div>
@@ -328,76 +328,6 @@ const Home = () => {
                 </section>
             </ScrollReveal>
 
-            {/* ── Testimonials ─────────────────────────────────────── */}
-            <ScrollReveal delay={100}>
-                <section className="testimonials-section">
-                    <div className="container">
-                        <div className="testimonials-header fade-in">
-                            <h2 className="section-title">What Our Customers Say</h2>
-                            <p className="section-subtitle">Trusted by thousands of homeowners and professionals</p>
-                        </div>
-                        <div className="testimonials-slider fade-in">
-                            {TESTIMONIALS.map((t, i) => (
-                                <div
-                                    key={i}
-                                    className={`testimonial-card ${i === testimonialIdx ? 'active' : ''}`}
-                                >
-                                    <StarRating rating={t.rating} />
-                                    <p className="testimonial-text">"{t.text}"</p>
-                                    <div className="testimonial-author">
-                                        <div className="testimonial-avatar">{t.avatar}</div>
-                                        <div>
-                                            <p className="testimonial-name">{t.name}</p>
-                                            <p className="testimonial-role">{t.role}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="testimonial-dots">
-                            {TESTIMONIALS.map((_, i) => (
-                                <button
-                                    key={i}
-                                    className={`testimonial-dot ${i === testimonialIdx ? 'active' : ''}`}
-                                    onClick={() => { setTestimonialIdx(i); clearInterval(testimonialTimer.current); }}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            </ScrollReveal>
-
-            {/* ── Newsletter ───────────────────────────────────────── */}
-            <ScrollReveal delay={100}>
-                <section className="newsletter-section">
-                    <div className="container">
-                        <div className="newsletter-card fade-in">
-                            <div className="newsletter-content">
-                                <h2 className="newsletter-title">Get Exclusive Deals & Color Tips</h2>
-                                <p className="newsletter-subtitle">
-                                    Subscribe to our newsletter and be the first to know about new arrivals, seasonal discounts, and expert painting advice.
-                                </p>
-                                <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
-                                    <input
-                                        type="email"
-                                        className="newsletter-input"
-                                        placeholder="Enter your email address"
-                                    />
-                                    <button type="submit" className="newsletter-btn">
-                                        Subscribe <FiArrowRight size={16} />
-                                    </button>
-                                </form>
-                                <p className="newsletter-note">🔒 No spam, unsubscribe anytime</p>
-                            </div>
-                            <div className="newsletter-visual">
-                                <div className="nl-blob nl-blob-1" />
-                                <div className="nl-blob nl-blob-2" />
-                                <div className="nl-blob nl-blob-3" />
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </ScrollReveal>
 
             {/* ── Footer ───────────────────────────────────────────── */}
             <footer className="footer">
