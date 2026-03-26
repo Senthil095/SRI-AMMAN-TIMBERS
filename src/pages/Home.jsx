@@ -51,6 +51,7 @@ const Home = () => {
     const [addedId, setAddedId] = useState(null);
     const [testimonialIdx, setTestimonialIdx] = useState(0);
     const [selectedSizes, setSelectedSizes] = useState({}); // { productId: sizeObj }
+    const [customerCount, setCustomerCount] = useState(0);
     const { addToCart } = useCart();
     const testimonialTimer = useRef(null);
 
@@ -66,7 +67,23 @@ const Home = () => {
                 setLoading(false);
             }
         };
+
+        const fetchStats = async () => {
+             try {
+                 const orderSnap = await getDocs(collection(db, 'orders'));
+                 const uniqueCustomers = new Set();
+                 orderSnap.docs.forEach(d => {
+                     const o = d.data();
+                     const key = o.customerEmail || o.userEmail || o.customerName;
+                     if (key) uniqueCustomers.add(key);
+                 });
+                 setCustomerCount(uniqueCustomers.size);
+             } catch (err) {
+                 console.error(err);
+             }
+        };
         fetchProducts();
+        fetchStats();
     }, []);
 
     // Auto-scroll testimonials
@@ -113,25 +130,25 @@ const Home = () => {
                             <span className="hero-title-accent"> To Life</span>
                         </h1>
                         <p className="hero-subtitle fade-in">
-                            Discover 500+ premium paints — from vibrant interiors to weather-proof exteriors.
+                            Discover {products.length}+ premium paints — from vibrant interiors to weather-proof exteriors.
                             Expert color consultation, fast delivery, and unbeatable prices.
                         </p>
                         <div className="hero-actions fade-in">
-                            <Link to="#products" className="btn btn-primary btn-lg hero-cta-primary">
+                            <a href="#products" className="btn btn-primary btn-lg hero-cta-primary" onClick={(e) => {
+                                e.preventDefault();
+                                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+                            }}>
                                 Shop Now <FiArrowRight size={18} />
-                            </Link>
-                            <Link to="/login" className="btn btn-outline-primary btn-lg">
-                                Get Free Consultation
-                            </Link>
+                            </a>
                         </div>
                         <div className="hero-stats fade-in">
                             <div className="hero-stat">
-                                <span className="hero-stat-num">500+</span>
+                                <span className="hero-stat-num">{products.length > 0 ? products.length : '...'}</span>
                                 <span className="hero-stat-label">Paint Shades</span>
                             </div>
                             <div className="hero-stat-divider" />
                             <div className="hero-stat">
-                                <span className="hero-stat-num">10K+</span>
+                                <span className="hero-stat-num">{customerCount > 0 ? customerCount : '...'}</span>
                                 <span className="hero-stat-label">Happy Customers</span>
                             </div>
                             <div className="hero-stat-divider" />

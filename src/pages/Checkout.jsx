@@ -21,11 +21,20 @@ const loadRazorpayScript = () => {
     });
 };
 
+const TAX_RATE = 0.18; // 18% GST
+const FREE_SHIPPING_THRESHOLD = 999;
+const SHIPPING_COST = 79;
+
 const Checkout = () => {
     const { currentUser } = useAuth();
     const { cartItems, cartTotal, clearCart } = useCart();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
+    const subtotal = cartTotal;
+    const tax = subtotal * TAX_RATE;
+    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+    const finalTotal = Math.round(subtotal + tax + shipping);
     const [form, setForm] = useState({
         name: '',
         phone: '',
@@ -77,7 +86,7 @@ const Checkout = () => {
                 userId: currentUser?.uid || 'guest',
                 userEmail: currentUser?.email || 'guest@example.com',
                 items: orderItems,
-                totalAmount: cartTotal,
+                totalAmount: finalTotal,
                 deliveryAddress: form
             };
             
@@ -90,7 +99,7 @@ const Checkout = () => {
                     userId: currentUser.uid,
                     userEmail: currentUser.email,
                     items: orderItems,
-                    totalAmount: cartTotal,
+                    totalAmount: finalTotal,
                     deliveryAddress: form
                 }),
             });
@@ -301,16 +310,22 @@ const Checkout = () => {
                         <div className="order-totals">
                             <div className="total-row">
                                 <span>Subtotal</span>
-                                <span>₹{cartTotal.toLocaleString()}</span>
+                                <span>₹{subtotal.toLocaleString()}</span>
                             </div>
                             <div className="total-row">
-                                <span>Delivery</span>
-                                <span className="text-green">Free</span>
+                                <span>GST (18%)</span>
+                                <span>₹{Math.round(tax).toLocaleString()}</span>
+                            </div>
+                            <div className="total-row">
+                                <span>Shipping</span>
+                                <span className={shipping === 0 ? "text-green" : ""}>
+                                    {shipping === 0 ? "Free" : `₹${shipping}`}
+                                </span>
                             </div>
                             <div className="total-divider" />
                             <div className="total-row grand-total">
                                 <span>Total</span>
-                                <span>₹{cartTotal.toLocaleString()}</span>
+                                <span>₹{finalTotal.toLocaleString()}</span>
                             </div>
                         </div>
                     </div>

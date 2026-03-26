@@ -3,20 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import {
     FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiArrowLeft,
-    FiHeart, FiShoppingCart, FiTag, FiTruck, FiShield, FiCheck
+    FiHeart, FiShoppingCart, FiTag, FiTruck, FiShield, FiCheck, FiMaximize
 } from 'react-icons/fi';
 import './CartPage.css';
 
 
-// Color swatches for display
-const PAINT_COLORS = [
-    { hex: '#FF6B6B', name: 'Coral Bliss' },
-    { hex: '#2EC4B6', name: 'Ocean Teal' },
-    { hex: '#4CC9F0', name: 'Sky Dream' },
-    { hex: '#FFD166', name: 'Sunny Gold' },
-    { hex: '#C3B1E1', name: 'Lavender Mist' },
-    { hex: '#87C38F', name: 'Sage Green' },
-];
+
 
 const TAX_RATE = 0.18; // 18% GST
 const FREE_SHIPPING_THRESHOLD = 999;
@@ -30,18 +22,6 @@ const CartPage = () => {
         removeFromCart, updateQuantity,
         saveForLater, moveToCart, removeSaved,
     } = useCart();
-
-    // Per-item state for size and color selections
-    const [itemOptions, setItemOptions] = useState({});
-
-    const getOption = (id, key, defaultVal) =>
-        itemOptions[id]?.[key] ?? defaultVal;
-
-    const setOption = (id, key, val) =>
-        setItemOptions(prev => ({
-            ...prev,
-            [id]: { ...(prev[id] || {}), [key]: val }
-        }));
 
     // Calculations
     const subtotal = cartTotal;
@@ -108,7 +88,6 @@ const CartPage = () => {
                                 {cartItems.map((item, idx) => {
                                     const unitPrice = item.selectedSize ? item.selectedSize.price : (item.discountPrice || item.price);
                                     const itemTotal = unitPrice * item.quantity;
-                                    const selectedColor = getOption(item.cartKey, 'color', PAINT_COLORS[idx % PAINT_COLORS.length]);
                                     const inStock = item.stock > 0;
 
                                     return (
@@ -136,22 +115,7 @@ const CartPage = () => {
                                                     }
                                                 </div>
 
-                                                {/* Color selector */}
-                                                <div className="cart-item-option-row">
-                                                    <span className="cart-item-option-label">Color:</span>
-                                                    <div className="cart-color-dots">
-                                                        {PAINT_COLORS.map(c => (
-                                                            <button
-                                                                key={c.hex}
-                                                                className={`cart-color-dot ${selectedColor.hex === c.hex ? 'active' : ''}`}
-                                                                style={{ background: c.hex }}
-                                                                title={c.name}
-                                                                onClick={() => setOption(item.id, 'color', c)}
-                                                            />
-                                                        ))}
-                                                    </div>
-                                                    <span className="cart-color-code">{selectedColor.hex}</span>
-                                                </div>
+
 
                                                 {/* Size display */}
                                                 {item.selectedSize && (
@@ -185,6 +149,13 @@ const CartPage = () => {
                                                     >
                                                         <FiTrash2 size={13} /> Remove
                                                     </button>
+                                                    <Link
+                                                        to={`/product/${item.id}#calculator`}
+                                                        className="cart-action-btn"
+                                                        style={{ textDecoration: 'none' }}
+                                                    >
+                                                        <FiMaximize size={13} /> Calculate Paint
+                                                    </Link>
                                                 </div>
                                             </div>
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useCart } from '../context/CartContext';
@@ -17,6 +17,7 @@ const TRUST_BADGES = [
 
 const ProductDetail = () => {
     const { id } = useParams();
+    const location = useLocation();
     const { addToCart } = useCart();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -38,8 +39,15 @@ const ProductDetail = () => {
             }
         };
         fetchProduct();
-        window.scrollTo(0, 0);
-    }, [id]);
+        
+        if (location.hash) {
+            setTimeout(() => {
+                document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [id, location.hash]);
 
     useEffect(() => {
         if (product?.sizes?.length > 0 && !selectedSize) {
@@ -215,7 +223,9 @@ const ProductDetail = () => {
                         )}
 
                         {/* Paint Calculator */}
-                        <PaintCalculator />
+                        <div id="calculator" style={{ scrollMarginTop: '80px' }}>
+                            <PaintCalculator />
+                        </div>
 
                         {/* Add to Cart */}
                         <div className="pd-actions">
